@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFSJ TECH - Em Manutenção</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter & Exo 2 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Seu arquivo de CSS personalizado -->
+    <link rel="stylesheet" href="style-em-manutencao.css">
+</head>
+<body class="antialiased">
+
+    <!-- Canvas para a animação 3D de fundo -->
+    <canvas id="background-canvas"></canvas>
+
+    <!-- O cabeçalho é opcional em uma página de manutenção, mas pode ser mantido se desejado -->
+    <header id="header" class="glassmorphism fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center group">
+                <span class="font-exo text-3xl font-black text-white tracking-wider">CFSJ<span class="text-cyan-400 group-hover:text-white transition-colors duration-300">TECH</span></span>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- ===== Seção de Manutenção ===== -->
+        <section id="maintenance-section" class="min-h-screen flex items-center justify-center pt-24 pb-12 relative overflow-hidden">
+            <div class="container mx-auto px-6 text-center z-10">
+                <div class="animate-on-scroll" style="transform: translateY(50px);">
+                    <div class="mb-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-cyan-400 mx-auto animate-spin" style="animation-duration: 3s;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <h1 class="font-exo text-4xl md:text-6xl font-black text-white uppercase">
+                        Em <span class="text-cyan-400">Manutenção</span>
+                    </h1>
+                    <p class="mt-6 max-w-lg mx-auto text-base md:text-lg text-gray-400">
+                        Estamos a realizar algumas melhorias no nosso site para lhe oferecer uma experiência ainda melhor. Estaremos de volta em breve!
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- O rodapé também é opcional, mas ajuda a manter a identidade da marca -->
+    <footer class="bg-black/50 border-t border-white/10">
+        <div class="container mx-auto px-6 py-8 text-center">
+             <p class="text-xs text-gray-500 mt-2">&copy; 2025 CFSJ Tech. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Three.js Library for 3D Graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Seu arquivo JavaScript -->
+    <script src="script-em-manutencao.js"></script>
+
+</body>
+</html>

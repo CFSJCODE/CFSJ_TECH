@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFSJ TECH - Página Não Encontrada</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter & Exo 2 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Seu arquivo de CSS personalizado -->
+    <link rel="stylesheet" href="style-erro-404.css">
+</head>
+<body class="antialiased">
+
+    <!-- Canvas para a animação 3D de fundo -->
+    <canvas id="background-canvas"></canvas>
+
+    <!-- ===== Cabeçalho (Header) ===== -->
+    <header id="header" class="glassmorphism fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center group">
+                <span class="font-exo text-3xl font-black text-white tracking-wider">CFSJ<span class="text-cyan-400 group-hover:text-white transition-colors duration-300">TECH</span></span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-10">
+                <a href="index.html" class="nav-link">Início</a>
+                <a href="servicos.html" class="nav-link">Serviços</a>
+                <a href="sobre.html" class="nav-link">Sobre</a>
+                <a href="contato.html" class="nav-link">Contato</a>
+            </nav>
+            <div class="flex items-center">
+                <a href="contato.html" class="hidden sm:block bg-cyan-500 text-black font-exo font-bold py-2 px-6 rounded-md text-sm transition-all duration-300 cyber-button">
+                    Solicitar Orçamento
+                </a>
+                <button id="mobile-menu-button" class="md:hidden ml-4 p-2 text-gray-300 hover:text-cyan-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden glassmorphism">
+            <a href="index.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Início</a>
+            <a href="servicos.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Serviços</a>
+            <a href="sobre.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Sobre Nós</a>
+            <a href="contato.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Contato</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- ===== Seção de Erro 404 ===== -->
+        <section id="error-section" class="min-h-screen flex items-center justify-center pt-24 pb-12 relative overflow-hidden">
+            <div class="container mx-auto px-6 text-center z-10">
+                <div class="animate-on-scroll" style="transform: translateY(50px);">
+                    <h1 class="font-exo text-8xl md:text-9xl font-black text-white uppercase relative glitch-text" data-text="404">
+                        404
+                    </h1>
+                    <h2 class="font-exo mt-4 text-3xl md:text-5xl font-bold text-white uppercase">
+                        Página Não Encontrada
+                    </h2>
+                    <p class="mt-6 max-w-lg mx-auto text-base md:text-lg text-gray-400">
+                        Oops! Parece que o link que você seguiu está quebrado ou a página foi removida.
+                    </p>
+                </div>
+
+                <div class="mt-12 animate-on-scroll" style="transform: translateY(50px); transition-delay: 0.2s;">
+                    <a href="index.html" class="w-full sm:w-auto bg-cyan-400 text-black font-exo font-bold py-4 px-10 rounded-md text-base transition-all duration-300 cyber-button">
+                        Voltar para o Início
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== Rodapé (Footer) ===== -->
+    <footer class="bg-black/50 border-t border-white/10">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+                <div class="mb-6 md:mb-0">
+                    <span class="font-exo text-xl font-bold text-white">CFSJ<span class="text-cyan-400">TECH</span></span>
+                    <p class="text-xs text-gray-500 mt-2">&copy; 2025 CFSJ Tech. Todos os direitos reservados.</p>
+                </div>
+                <!-- Social Icons com novo hover -->
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="group w-10 h-10 rounded-full bg-gray-800 flex justify-center items-center transition-all duration-300 hover:bg-white hover:scale-110">
+                        <svg class="w-6 h-6 text-gray-400 group-hover:text-pink-600 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c-4.42 0-7.73 3.255-7.73 7.222 0 3.124 1.887 5.86 4.54 6.812.33.06.45-.143.45-.317 0-.156-.006-1.002-.009-1.828-1.83.398-2.217-.88-2.217-.88-.3-.762-.732-.965-.732-.965-.598-.408.045-.398.045-.398.66.047 1.006.677 1.006.677.587 1.003 1.54 1.16 1.914.886.06-.69.23-1.16.42-1.428-1.46-.166-3-.73-3-3.255 0-.72.258-1.31.678-1.77-.068-.166-.293-.836.064-1.745 0 0 .55-.176 1.8.674a6.27 6.27 0 011.636-.22c.55.002 1.1.076 1.636.22 1.25-.85 1.8-.674 1.8-.674.357.91.132 1.58.064 1.745.42.46.678 1.05.678 1.77 0 2.533-1.54 3.087-3.01 3.25.236.203.444.606.444 1.222 0 .88-.008 1.59-.008 1.806 0 .176.12.38.454.316 2.65-1.02 4.537-3.688 4.537-6.81 0-3.967-3.31-7.222-7.73-7.222z" clip-rule="evenodd" /></svg>
+                    </a>
+                    <a href="#" class="group w-10 h-10 rounded-full bg-gray-800 flex justify-center items-center transition-all duration-300 hover:bg-white hover:scale-110">
+                        <svg class="w-6 h-6 text-gray-400 group-hover:text-blue-600 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.25 6.5 1.75 1.75 0 016.5 8.25zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.64 1.64 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.96 3.36 4.42z" /></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Three.js Library for 3D Graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Seu arquivo JavaScript -->
+    <script src="script-erro-404.js"></script>
+
+</body>
+</html>
