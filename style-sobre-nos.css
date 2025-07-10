@@ -1,48 +1,121 @@
-/* --- Configuração Base e Tipografia --- */
+/*
+ * ===================================================================
+ * Estilos CSS Unificados - Tema Futurista/Cibernético
+ * ===================================================================
+ * Este arquivo combina e harmoniza dois conjuntos de estilos para
+ * criar uma identidade visual coesa.
+ *
+ * Índice:
+ * 1. Configuração Base e Tipografia
+ * 2. Canvas 3D de Fundo
+ * 3. Efeito de Vidro (Glassmorphism)
+ * 4. Navegação Futurista
+ * 5. Animações de Scroll
+ * 6. Efeitos de Hover Avançados (Botões e Cards)
+ * 7. Timeline Futurista
+ * 8. Barra de Rolagem Personalizada
+ * ===================================================================
+ */
+
+/* --- 1. Configuração Base e Tipografia --- */
 body {
     font-family: 'Inter', sans-serif;
     background-color: #000000; /* Fundo preto puro para maior contraste */
     color: #E0E0E0;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Previne scroll horizontal */
 }
 
-/* A fonte Exo 2 será usada para todos os títulos e elementos de destaque */
+/* Fonte de destaque para títulos e elementos especiais */
 .font-exo {
     font-family: 'Exo 2', sans-serif;
 }
 
-/* --- Canvas 3D de Fundo --- */
+/* --- 2. Canvas 3D de Fundo --- */
 #background-canvas {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Fica atrás de todo o conteúdo */
+    z-index: -1; /* Garante que fique atrás de todo o conteúdo */
     opacity: 0.8;
 }
 
-/* --- Efeito de Vidro Aprimorado --- */
+/* --- 3. Efeito de Vidro (Glassmorphism) --- */
+/* Estilo unificado com o visual mais detalhado */
 .glassmorphism {
-    background: rgba(10, 15, 25, 0.3); /* Tom azulado escuro */
+    background: rgba(10, 15, 25, 0.3); /* Tom azulado escuro e sutil */
     backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(0, 255, 255, 0.15);
-    box-shadow: 0 0 40px rgba(0, 255, 255, 0.05); /* Brilho sutil constante */
+    -webkit-backdrop-filter: blur(15px); /* Suporte para Safari */
+    border: 1px solid rgba(0, 255, 255, 0.15); /* Borda ciano translúcida */
+    box-shadow: 0 0 40px rgba(0, 255, 255, 0.05); /* Brilho sutil para profundidade */
 }
 
-/* --- Animações Complexas --- */
+/* --- 4. Navegação Futurista --- */
+.nav-link {
+    position: relative;
+    padding: 8px 4px;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #a0a0a0; /* Cor padrão para links inativos */
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ffffff; /* Cor ao passar o mouse */
+}
+
+/* Efeito de linha dupla animada para hover e link ativo */
+.nav-link::before,
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #0CF; /* Cor ciano vibrante */
+    left: 0;
+    transform: scaleX(0);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.nav-link::before {
+    top: 0;
+    transform-origin: left;
+}
+
+.nav-link::after {
+    bottom: 0;
+    transform-origin: right;
+}
+
+.nav-link:hover::before,
+.nav-link:hover::after,
+.active-link::before,
+.active-link::after {
+    transform: scaleX(1); /* Expande as linhas */
+}
+
+.active-link {
+    color: #ffffff !important; /* Garante que o link ativo seja branco */
+}
+
+
+/* --- 5. Animações de Scroll --- */
 .animate-on-scroll {
     opacity: 0;
     transition: opacity 1s ease-out, transform 1s ease-out;
 }
 
+/* Classe adicionada via JS quando o elemento está visível */
 .is-visible {
     opacity: 1;
-    transform: none !important;
+    transform: none !important; /* Reseta qualquer transform inicial (ex: translateY) */
 }
 
-/* --- Efeitos de Hover Avançados --- */
+/* --- 6. Efeitos de Hover Avançados --- */
+
 /* Efeito de Borda Cibernética para Botões */
 .cyber-button {
     position: relative;
@@ -50,10 +123,13 @@ body {
     transform: scale(1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .cyber-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(0, 224, 255, 0.5);
+    transform: scale(1.05); /* Leve aumento no hover */
+    box-shadow: 0 0 25px rgba(0, 224, 255, 0.5); /* Brilho ciano */
 }
+
+/* Efeito de brilho que atravessa o botão */
 .cyber-button::before {
     content: '';
     position: absolute;
@@ -64,6 +140,7 @@ body {
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
     transition: left 0.4s ease;
 }
+
 .cyber-button:hover::before {
     left: 100%;
 }
@@ -73,58 +150,24 @@ body {
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     transform-style: preserve-3d;
 }
+
 .card-3d-hover:hover {
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    border-color: rgba(0, 255, 255, 0.4);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); /* Sombra mais pronunciada para efeito de flutuação */
+    border-color: rgba(0, 255, 255, 0.4); /* Destaca a borda no hover */
 }
 
-/* --- Barra de Rolagem --- */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #000; }
-::-webkit-scrollbar-thumb {
-    background-color: #0CF;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #0CF;
-}
-
-/* --- Navegação Futurista --- */
-.nav-link {
-    position: relative;
-    padding: 8px 4px;
-    font-family: 'Exo 2', sans-serif;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #a0a0a0;
-    transition: color 0.3s ease;
-}
-.nav-link:hover { color: #ffffff; }
-.nav-link::before, .nav-link::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background: #0CF;
-    left: 0;
-    transform: scaleX(0);
-    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-}
-.nav-link::before { top: 0; transform-origin: left; }
-.nav-link::after { bottom: 0; transform-origin: right; }
-.nav-link:hover::before, .nav-link:hover::after, .active-link::before, .active-link::after {
-    transform: scaleX(1);
-}
-.active-link { color: #ffffff !important; }
-
-/* --- Timeline Futurista --- */
+/* --- 7. Timeline Futurista --- */
 .timeline-item {
     position: relative;
-    padding-left: 3rem; 
+    padding-left: 3rem;
     padding-bottom: 3rem;
 }
+
 .timeline-item:last-child {
-    padding-bottom: 0;
+    padding-bottom: 0; /* Remove o padding extra do último item */
 }
+
+/* Linha vertical da timeline com gradiente */
 .timeline-item::before {
     content: '';
     position: absolute;
@@ -134,21 +177,42 @@ body {
     height: 100%;
     background: linear-gradient(to bottom, rgba(0,204,255,0), rgba(0,204,255,0.4), rgba(0,204,255,0));
 }
+
+/* Ajusta a linha do último item para não exceder */
 .timeline-item:last-child::before {
     height: 1rem;
 }
+
+/* Ponto da timeline */
 .timeline-dot {
     position: absolute;
-    left: calc(1rem - 0.5rem + 1px);
+    left: calc(1rem - 0.5rem + 1px); /* Centraliza o ponto na linha */
     top: 0.5rem;
     height: 1rem;
     width: 1rem;
     border-radius: 50%;
     background-color: #000;
     border: 2px solid #0CF;
-    box-shadow: 0 0 10px #0CF;
+    box-shadow: 0 0 10px #0CF; /* Efeito de brilho */
     transition: transform 0.3s ease;
 }
+
 .timeline-item:hover .timeline-dot {
-    transform: scale(1.2);
+    transform: scale(1.2); /* Aumenta o ponto no hover */
+}
+
+
+/* --- 8. Barra de Rolagem Personalizada --- */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #0CF; /* Cor ciano */
+    border-radius: 10px;
+    box-shadow: 0 0 10px #0CF; /* Brilho na barra de rolagem */
 }
