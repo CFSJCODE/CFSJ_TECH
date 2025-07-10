@@ -5,38 +5,52 @@
     <title>Sobre Nós - A Jornada da CFSJ TECH em Tecnologia e Inovação</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- SEO e Metatags Essenciais -->
     <meta name="description" content="Conheça a história e a paixão por trás da CFSJ TECH. Liderada por Cláudio Francisco, nossa missão é criar soluções inovadoras em TI, automação e robótica.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://cfsjcode.github.io/CFSJ_TECH/sobre.html" />
 
+    <!-- Open Graph / Facebook -->
     <meta property="og:title" content="Sobre Nós - A Jornada da CFSJ TECH em Tecnologia e Inovação" />
     <meta property="og:description" content="Conheça a história e a paixão por trás da CFSJ TECH e seu fundador, Cláudio Francisco." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://cfsjcode.github.io/CFSJ_TECH/sobre.html" />
-    <meta property="og:image" content="https://cfsjcode.github.io/CFSJ_TECH/assets/images/social-share-sobre.jpg" /> <meta property="og:site_name" content="CFSJ TECH" />
+    <meta property="og:image" content="https://cfsjcode.github.io/CFSJ_TECH/assets/images/social-share-sobre.jpg" />
+    <meta property="og:site_name" content="CFSJ TECH" />
     <meta property="og:locale" content="pt_BR" />
 
+    <!-- Verificação do Google -->
     <meta name="google-site-verification" content="qpdubDpjluAAwqTiNbh7W0tYYKwAMb3COZQ6ntawjfA" />
     
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Sobre Nós - A Jornada da CFSJ TECH em Tecnologia e Inovação">
     <meta name="twitter:description" content="Conheça a história e a paixão por trás da CFSJ TECH e seu fundador, Cláudio Francisco.">
-    <meta name="twitter:image" content="https://cfsjcode.github.io/CFSJ_TECH/assets/images/social-share-sobre.jpg"> <link rel="icon" href="favicon.ico" sizes="any">
+    <meta name="twitter:image" content="https://cfsjcode.github.io/CFSJ_TECH/assets/images/social-share-sobre.jpg">
+    
+    <!-- Favicons -->
+    <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
+    <!-- Estilos e Fontes -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- CSS Unificado Externo -->
     <link rel="stylesheet" href="style-sobre-nos.css">
 </head>
-<body class="antialiased">
+<body class="antialiased bg-[#0A0F19] text-gray-300 font-inter">
 
-    <canvas id="background-canvas"></canvas>
+    <!-- Canvas para Animação 3D -->
+    <canvas id="background-canvas" class="fixed top-0 left-0 w-full h-full z-0"></canvas>
 
+    <!-- Cabeçalho Fixo -->
     <header id="header" class="glassmorphism fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="index.html" class="flex items-center group">
+                <img src="https://i.ibb.co/PZftZpnM/503667111-17847648714506663-7872537760512092914-n.jpg" alt="Logo CFSJ TECH" class="w-10 h-10 rounded-full mr-3 border-2 border-cyan-400/50">
                 <span class="font-exo text-3xl font-black text-white tracking-wider">CFSJ<span class="text-cyan-400 group-hover:text-white transition-colors duration-300">TECH</span></span>
             </a>
             <nav class="hidden md:flex items-center space-x-10">
@@ -46,7 +60,7 @@
                 <a href="contato.html" class="nav-link">Contato</a>
             </nav>
             <div class="flex items-center">
-                <a href="contato.html" class="hidden sm:block bg-cyan-500 text-black font-exo font-bold py-2 px-6 rounded-md text-sm transition-all duration-300 cyber-button">
+                <a href="contato.html" class="hidden sm:block bg-cyan-500 text-black font-exo font-bold py-2 px-6 rounded-md text-sm transition-all duration-300 hover:bg-cyan-400 hover:shadow-lg hover:shadow-cyan-500/50">
                     Solicitar Orçamento
                 </a>
                 <button id="mobile-menu-button" class="md:hidden ml-4 p-2 text-gray-300 hover:text-cyan-400">
@@ -54,6 +68,7 @@
                 </button>
             </div>
         </div>
+        <!-- Menu Mobile -->
         <div id="mobile-menu" class="hidden md:hidden glassmorphism">
             <a href="index.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Início</a>
             <a href="servicos.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Serviços</a>
@@ -62,10 +77,12 @@
         </div>
     </header>
 
-    <main>
-        <section id="sobre-hero" class="pt-32 md:pt-40 pb-16 md:pb-20 relative flex items-center justify-center">
-            <div class="container mx-auto px-6 text-center z-10 relative">
-                <div class="animate-on-scroll" style="transform: translateY(50px);">
+    <!-- Conteúdo Principal -->
+    <main class="relative z-10">
+        <!-- Seção Hero -->
+        <section id="sobre-hero" class="pt-32 md:pt-40 pb-16 md:pb-20 flex items-center justify-center">
+            <div class="container mx-auto px-6 text-center">
+                <div>
                     <h1 class="font-exo text-4xl md:text-6xl font-black text-white uppercase">
                         Sobre <span class="text-cyan-400">Nós</span>
                     </h1>
@@ -76,39 +93,45 @@
             </div>
         </section>
 
-        <section id="sobre-conteudo" class="pb-16 md:pb-20 relative">
-            <div class="container mx-auto px-6 z-10 relative">
+        <!-- Seção de Conteúdo Sobre -->
+        <section id="sobre-conteudo" class="pb-16 md:pb-20">
+            <div class="container mx-auto px-6">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
 
+                    <!-- Coluna da Esquerda: Perfil e Objetivo -->
                     <div class="lg:col-span-1 space-y-8">
-                        <div class="glassmorphism rounded-xl p-8 text-center animate-on-scroll card-3d-hover" style="transform: translateY(50px); transition-delay: 0.1s;">
-                            <img src="https://placehold.co/150x150/0A0F19/00ffff?text=CF" alt="Foto de Cláudio Francisco, CEO da CFSJ TECH" class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-cyan-400/50 shadow-lg shadow-cyan-500/20">
+                        <div class="glassmorphism rounded-xl p-8 text-center">
+                            <img src="https://i.ibb.co/PZftZpnM/503667111-17847648714506663-7872537760512092914-n.jpg" alt="Foto de Cláudio Francisco, CEO da CFSJ TECH" class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-cyan-400/50 shadow-lg shadow-cyan-500/20 object-cover">
                             <h3 class="font-exo text-2xl font-bold text-white">Cláudio Francisco</h3>
                             <p class="text-cyan-400 mt-1">Engenheiro de Computação</p>
                             <p class="text-gray-400 text-sm mt-4">CEO da CFSJ TECH, investidor em equipes de robótica, especialista em TI e entusiasta em robótica.</p>
                         </div>
 
-                        <div class="glassmorphism rounded-xl p-8 animate-on-scroll card-3d-hover" style="transform: translateY(50px); transition-delay: 0.2s;">
+                        <div class="glassmorphism rounded-xl p-8">
                             <h4 class="font-exo text-xl font-bold text-white mb-4 flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>Objetivo</h4>
                             <p class="text-gray-300 leading-relaxed">Unir teoria e prática para criar soluções tecnológicas eficientes, acessíveis e inovadoras que impulsionam pessoas e negócios.</p>
                         </div>
                     </div>
 
-                    <div class="lg:col-span-2 glassmorphism rounded-xl p-8 md:p-10 animate-on-scroll card-3d-hover" style="transform: translateY(50px); transition-delay: 0.3s;">
+                    <!-- Coluna da Direita: Timeline -->
+                    <div class="lg:col-span-2 glassmorphism rounded-xl p-8 md:p-10">
                         <h3 class="font-exo text-2xl md:text-3xl font-bold text-white mb-8">Jornada Profissional e Acadêmica</h3>
-                        <div class="relative">
+                        <div class="relative border-l-2 border-cyan-400/30 pl-8 space-y-10">
+                            
                             <div class="timeline-item">
                                 <div class="timeline-dot"></div>
                                 <h4 class="font-exo text-lg font-bold text-cyan-400">CEO da CFSJ TECH</h4>
                                 <p class="text-sm text-gray-400 mb-3">Presente</p>
                                 <p class="text-gray-300">Liderança de projetos em suporte técnico, manutenção e desenvolvimento de soluções de TI acessíveis para pessoas e pequenos negócios.</p>
                             </div>
+                            
                             <div class="timeline-item">
                                 <div class="timeline-dot"></div>
                                 <h4 class="font-exo text-lg font-bold text-cyan-400">Engenharia de Computação</h4>
                                 <p class="text-sm text-gray-400 mb-3">PUC Minas (Previsão 2031/32)</p>
                                 <p class="text-gray-300">Aprofundamento em Sistemas Embarcados (Arduino, ESP32), Redes, Infraestrutura de TI, Automação e Robótica.</p>
                             </div>
+                            
                             <div class="timeline-item">
                                 <div class="timeline-dot"></div>
                                 <h4 class="font-exo text-lg font-bold text-cyan-400">Experiência Técnica no SESI</h4>
@@ -119,12 +142,14 @@
                                     <li><span class="font-semibold text-cyan-300">Robótica (FLL):</span> Suporte a equipes FIRST LEGO League.</li>
                                 </ul>
                             </div>
+                            
                             <div class="timeline-item">
                                 <div class="timeline-dot"></div>
                                 <h4 class="font-exo text-lg font-bold text-cyan-400">Auxiliar de Tutor de Robótica</h4>
                                 <p class="text-sm text-gray-400 mb-3">Seed Idiomas | CodeBuddys</p>
                                 <p class="text-gray-300">Ensino de robótica e programação para crianças e adolescentes com Arduino, estimulando o raciocínio lógico e a criatividade.</p>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -132,16 +157,20 @@
         </section>
     </main>
 
-    <footer class="bg-black/50 border-t border-white/10 mt-20">
+    <!-- Rodapé -->
+    <footer class="bg-black/50 border-t border-white/10 mt-20 relative z-10">
         <div class="container mx-auto px-6 py-8">
             <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-                <div class="mb-6 md:mb-0">
-                    <span class="font-exo text-xl font-bold text-white">CFSJ<span class="text-cyan-400">TECH</span></span>
-                    <p class="text-xs text-gray-500 mt-2">&copy; 2025 CFSJ Tech. Todos os direitos reservados.</p>
+                <div class="mb-6 md:mb-0 flex items-center">
+                    <img src="https://i.ibb.co/PZftZpnM/503667111-17847648714506663-7872537760512092914-n.jpg" alt="Logo CFSJ TECH" class="w-8 h-8 rounded-full mr-3 border-2 border-cyan-400/50">
+                    <div>
+                        <span class="font-exo text-xl font-bold text-white">CFSJ<span class="text-cyan-400">TECH</span></span>
+                        <p class="text-xs text-gray-500 mt-1">&copy; 2025 CFSJ Tech. Todos os direitos reservados.</p>
+                    </div>
                 </div>
                 <div class="flex items-center space-x-4">
                     <a href="#" class="group w-10 h-10 rounded-full bg-gray-800 flex justify-center items-center transition-all duration-300 hover:bg-white hover:scale-110">
-                        <svg class="w-6 h-6 text-gray-400 group-hover:text-pink-600 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c-4.42 0-7.73 3.255-7.73 7.222 0 3.124 1.887 5.86 4.54 6.812.33.06.45-.143.45-.317 0-.156-.006-1.002-.009-1.828-1.83.398-2.217-.88-2.217-.88-.3-.762-.732-.965-.732-.965-.598-.408.045-.398.045-.398.66.047 1.006.677 1.006.677.587 1.003 1.54 1.16 1.914.886.06-.69.23-1.16.42-1.428-1.46-.166-3-.73-3-3.255 0-.72.258-1.31.678-1.77-.068-.166-.293-.836.064-1.745 0 0 .55-.176 1.8.674a6.27 6.27 0 011.636-.22c.55.002 1.1.076 1.636.22 1.25-.85 1.8-.674 1.8-.674.357.91.132 1.58.064 1.745.42.46.678 1.05.678 1.77 0 2.533-1.54 3.087-3.01 3.25.236.203.444.606.444 1.222 0 .88-.008 1.59-.008 1.806 0 .176.12.38.454.316 2.65-1.02 4.537-3.688 4.537-6.81 0-3.967-3.31-7.222-7.73-7.222z" clip-rule="evenodd" /></svg>
+                        <svg class="w-6 h-6 text-gray-400 group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.03-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.022A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.291 2.747-1.022 2.747-1.022.546 1.378.203 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.942.359.308.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
                     </a>
                     <a href="#" class="group w-10 h-10 rounded-full bg-gray-800 flex justify-center items-center transition-all duration-300 hover:bg-white hover:scale-110">
                         <svg class="w-6 h-6 text-gray-400 group-hover:text-blue-600 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.25 6.5 1.75 1.75 0 016.5 8.25zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.64 1.64 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.96 3.36 4.42z" /></svg>
@@ -151,8 +180,10 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     
-    <script src="script-sobre-nos.js"></script>
+    <!-- Script Unificado Externo -->
+    <script src="script-sobre-nos.js" defer></script>
 </body>
 </html>
