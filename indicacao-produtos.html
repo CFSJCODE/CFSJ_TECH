@@ -2,162 +2,130 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Produtos Indicados e Curadoria Técnica | CFSJ TECH</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Curadoria técnica de produtos e periféricos selecionados pela CFSJ TECH.">
+    <meta name="theme-color" content="#0a0f19">
+    <title>CFSJ TECH - Indicação de Produtos</title>
 
-    <meta name="description" content="Curadoria técnica de hardware e ferramentas recomendada pela CFSJ TECH. Equipamentos testados e aprovados para alta performance.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://cfsjcode.github.io/CFSJ_TECH/produtos.html" />
-
-    <meta property="og:title" content="Produtos Indicados | CFSJ TECH" />
-    <meta property="og:description" content="Lista de equipamentos e ferramentas validados tecnicamente pela nossa equipe." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://cfsjcode.github.io/CFSJ_TECH/produtos.html" />
-    <meta property="og:image" content="https://cfsjcode.github.io/CFSJ_TECH/assets/images/social-share-produtos.jpg" />
-    <meta property="og:site_name" content="CFSJ TECH" />
-    <meta property="og:locale" content="pt_BR" />
-
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Preconnect para otimização de performance das fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts: Inter & Exo 2 -->
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style-produtos.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Arquivo de CSS personalizado -->
+    <link rel="stylesheet" href="style-em-construcao.css">
 </head>
-<body class="antialiased bg-[#0A0F19] text-gray-300 font-inter">
+<body class="bg-gray-900 text-white font-inter antialiased overflow-hidden selection:bg-cyan-500/30">
 
-    <canvas id="background-canvas"></canvas>
+    <!-- Canvas para a animação 3D de fundo -->
+    <canvas id="background-canvas" class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true"></canvas>
 
-    <header id="header" class="glassmorphism fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="flex items-center group">
-                <span class="font-exo text-3xl font-black text-white tracking-wider">CFSJ<span class="text-cyan-400 group-hover:text-white transition-colors duration-300">TECH</span></span>
+    <!-- ==========================================
+         CABEÇALHO (HEADER & NAVIGATION)
+    =========================================== -->
+    <header id="header" class="glassmorphism fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/10 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between relative z-10">
+            
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center group focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded" aria-label="Voltar para a página inicial">
+                <span class="font-exo text-3xl font-black text-white tracking-wider">
+                    CFSJ<span class="text-cyan-400 transition-colors duration-300 group-hover:text-cyan-300">TECH</span>
+                </span>
             </a>
-            <nav class="hidden md:flex items-center space-x-8">
-                <a href="index.html" class="nav-link">Início</a>
-                <a href="servicos.html" class="nav-link">Serviços</a>
-                <a href="portfolio.html" class="nav-link">Portfólio</a>
-                <a href="produtos.html" class="nav-link active-link">Indicação De Produtos</a>
-                <a href="sobre.html" class="nav-link">Sobre</a>
-                <a href="contato.html" class="nav-link">Contato</a>
+            
+            <!-- Navegação Desktop -->
+            <nav class="hidden md:flex items-center space-x-10" aria-label="Navegação principal">
+                <a href="index.html" class="nav-link text-gray-300 transition-colors hover:text-cyan-400 focus:outline-none focus:text-cyan-400">Início</a>
+                <a href="servicos.html" class="nav-link text-gray-300 transition-colors hover:text-cyan-400 focus:outline-none focus:text-cyan-400">Serviços</a>
+                <a href="portfolio.html" class="nav-link text-gray-300 transition-colors hover:text-cyan-400 focus:outline-none focus:text-cyan-400">Portfólio</a> 
+                <a href="indicacao-produtos.html" class="nav-link active-link text-cyan-400 font-bold focus:outline-none" aria-current="page">Indicação de Produtos</a>
+                <a href="sobre.html" class="nav-link text-gray-300 transition-colors hover:text-cyan-400 focus:outline-none focus:text-cyan-400">Sobre</a>
+                <a href="contato.html" class="nav-link text-gray-300 transition-colors hover:text-cyan-400 focus:outline-none focus:text-cyan-400">Contato</a>
             </nav>
+
+            <!-- Botão de Ação & Toggle Mobile -->
             <div class="flex items-center">
-                <a href="contato.html" class="hidden sm:block bg-cyan-500 text-black font-exo font-bold py-2 px-6 rounded-md text-sm transition-all duration-300 cyber-button">
+                <a href="contato.html" class="cyber-button hidden sm:inline-block bg-cyan-500 text-black font-exo font-bold text-sm py-2 px-6 rounded-md shadow-[0_0_15px_rgba(6,182,212,0.5)] transition-all duration-300 hover:bg-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:ring-offset-2 focus:ring-offset-gray-900">
                     Solicitar Orçamento
                 </a>
-                <button id="mobile-menu-button" class="md:hidden ml-4 p-2 text-gray-300 hover:text-cyan-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                
+                <button id="mobile-menu-button" class="ml-4 p-2 text-gray-300 transition-colors md:hidden hover:text-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menu de navegação">
+                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
                 </button>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden glassmorphism">
-            <a href="index.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Início</a>
-            <a href="servicos.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Serviços</a>
-            <a href="portfolio.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Portfólio</a>
-            <a href="produtos.html" class="block py-3 px-6 text-sm text-cyan-400 font-bold bg-cyan-500/10">Indicações</a>
-            <a href="sobre.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Sobre Nós</a>
-            <a href="contato.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Contato</a>
+
+        <!-- Menu de Navegação Mobile -->
+        <div id="mobile-menu" class="glassmorphism relative z-10 hidden border-t border-cyan-500/20 bg-black/95 backdrop-blur-xl md:hidden">
+            <nav class="flex flex-col py-2" aria-label="Navegação mobile">
+                <a href="index.html" class="block px-6 py-3 text-sm text-gray-200 transition-all hover:bg-cyan-500/20 hover:text-cyan-400">Início</a>
+                <a href="servicos.html" class="block px-6 py-3 text-sm text-gray-200 transition-all hover:bg-cyan-500/20 hover:text-cyan-400">Serviços</a>
+                <a href="portfolio.html" class="block px-6 py-3 text-sm text-gray-200 transition-all hover:bg-cyan-500/20 hover:text-cyan-400">Portfólio</a>
+                <a href="indicacao-produtos.html" class="block border-l-4 border-cyan-400 bg-cyan-500/10 px-6 py-3 text-sm font-bold text-cyan-400" aria-current="page">Indicação de Produtos</a>
+                <a href="sobre.html" class="block px-6 py-3 text-sm text-gray-200 transition-all hover:bg-cyan-500/20 hover:text-cyan-400">Sobre Nós</a>
+                <a href="contato.html" class="block px-6 py-3 text-sm text-gray-200 transition-all hover:bg-cyan-500/20 hover:text-cyan-400">Contato</a>
+            </nav>
         </div>
     </header>
 
-    <main>
-        <section id="produtos-hero" class="pt-32 md:pt-40 pb-12 relative flex items-center justify-center">
-            <div class="container mx-auto px-6 text-center z-10 relative">
-                <div class="animate-on-scroll">
-                    <h1 class="font-exo text-4xl md:text-6xl font-black text-white uppercase">
-                        Produtos <span class="text-cyan-400">Indicados</span>
-                    </h1>
-                    <p class="mt-4 max-w-2xl mx-auto text-gray-300 text-lg">
-                        Navegue por nossas categorias e encontre o equipamento certo, validado pela nossa engenharia.
-                    </p>
+    <!-- ==========================================
+         CONTEÚDO PRINCIPAL (ESTADO DE CONSTRUÇÃO)
+    =========================================== -->
+    <main class="relative z-10 flex h-screen items-center justify-center overflow-hidden pt-24 pb-12">
+        <section id="construction-section" class="container mx-auto px-6 text-center">
+            
+            <div class="animate-on-scroll" style="transform: translateY(50px);">
+                <!-- Ícone Animado de Engrenagem -->
+                <div class="mb-8 flex justify-center" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-cyan-400 animate-[spin_6s_linear_infinite]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
                 </div>
-            </div>
-        </section>
-
-        <section id="categories-section" class="pb-24 px-6 relative z-10">
-            <div class="container mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
-
-                    <div class="glassmorphism rounded-xl p-8 cursor-pointer group hover:border-cyan-400 transition-all duration-300 animate-on-scroll card-category" style="transition-delay: 0.1s;" onclick="showProducts('conectividade')">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="p-3 bg-cyan-500/20 rounded-lg text-cyan-400 group-hover:bg-cyan-400 group-hover:text-black transition-colors flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" /></svg>
-                            </div>
-                            <h3 class="font-exo text-lg md:text-xl lg:text-2xl font-bold text-white leading-tight tracking-tight whitespace-nowrap overflow-hidden text-ellipsis">Cabos e Acessórios de Conectividade</h3>
-                        </div>
-                        <p class="text-gray-400 text-sm">Soluções para infraestrutura estável: roteadores, cabos de rede de alta categoria e adaptadores.</p>
-                        <div class="mt-6 flex items-center text-cyan-400 text-sm font-bold uppercase tracking-wider group-hover:underline">
-                            Ver Produtos <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                        </div>
-                    </div>
-
-                    <div class="glassmorphism rounded-xl p-8 cursor-pointer group hover:border-cyan-400 transition-all duration-300 animate-on-scroll card-category" style="transition-delay: 0.2s;" onclick="showProducts('perifericos')">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="p-3 bg-cyan-500/20 rounded-lg text-cyan-400 group-hover:bg-cyan-400 group-hover:text-black transition-colors flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-                            </div>
-                            <h3 class="font-exo text-lg md:text-xl lg:text-2xl font-bold text-white leading-tight tracking-tight">Periféricos e Acessórios para Estações de Trabalho / Jogos</h3>
-                        </div>
-                        <p class="text-gray-400 text-sm">Instrumentos de precisão e periféricos para <em>setup</em> e organização profissional.</p>
-                        <div class="mt-6 flex items-center text-cyan-400 text-sm font-bold uppercase tracking-wider group-hover:underline">
-                            Ver Produtos <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                        </div>
-                    </div>
-
-                    <div class="glassmorphism rounded-xl p-8 cursor-pointer group hover:border-cyan-400 transition-all duration-300 animate-on-scroll card-category md:col-span-2 md:w-1/2 md:mx-auto" style="transition-delay: 0.3s;" onclick="showProducts('energia')">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="p-3 bg-cyan-500/20 rounded-lg text-cyan-400 group-hover:bg-cyan-400 group-hover:text-black transition-colors flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                            </div>
-                            <h3 class="font-exo text-lg md:text-xl lg:text-2xl font-bold text-white leading-tight tracking-tight">Energia & Acessórios Elétricos</h3>
-                        </div>
-                        
-                        <p class="text-gray-400 text-sm">Proteção elétrica (DPS, filtros), nobreaks e tomadas/plugues inteligentes.</p>
-                        
-                        <div class="mt-6 flex items-center text-cyan-400 text-sm font-bold uppercase tracking-wider group-hover:underline">
-                            Ver Produtos <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="products-section" class="hidden pb-24 px-6 relative z-10">
-            <div class="container mx-auto">
                 
-                <button onclick="hideProducts()" class="mb-8 flex items-center text-gray-400 hover:text-cyan-400 transition-colors group">
-                    <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                    Voltar para Categorias
-                </button>
-
-                <h2 id="category-title" class="font-exo text-3xl md:text-4xl font-bold text-white mb-12 border-l-4 border-cyan-400 pl-4">
-                    </h2>
-
-                <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    </div>
+                <h1 class="font-exo text-4xl md:text-6xl font-black uppercase tracking-tight text-white drop-shadow-lg">
+                    Página Em <span class="text-cyan-400">Construção</span>
+                </h1>
+                
+                <p class="mx-auto mt-6 max-w-lg text-base md:text-lg text-gray-400 leading-relaxed">
+                    Estamos a trabalhar arduamente para construir algo incrível para você. Volte em breve para ver nossa curadoria técnica de produtos!
+                </p>
             </div>
-        </section>
 
+            <!-- Botão de Retorno -->
+            <div class="mt-12 animate-on-scroll" style="transform: translateY(50px); transition-delay: 0.2s;">
+                <a href="index.html" class="inline-block w-full sm:w-auto rounded-md bg-cyan-500 px-10 py-4 font-exo text-base font-bold text-black shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-400 hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:ring-offset-2 focus:ring-offset-gray-900">
+                    Voltar para o Início
+                </a>
+            </div>
+            
+        </section>
     </main>
 
-    <footer class="bg-black/50 border-t border-white/10 mt-20 relative z-10">
-        <div class="container mx-auto px-6 py-8">
-            <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-                <div class="mb-6 md:mb-0">
-                    <span class="font-exo text-xl font-bold text-white">CFSJ<span class="text-cyan-400">TECH</span></span>
-                    <p class="text-xs text-gray-500 mt-2">&copy; 2025 CFSJ Tech. Todos os direitos reservados.</p>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="#" class="group w-10 h-10 rounded-full bg-gray-800 flex justify-center items-center transition-all duration-300 hover:bg-white hover:scale-110">
-                        <svg class="w-6 h-6 text-gray-400 group-hover:text-blue-600 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.25 6.5 1.75 1.75 0 016.5 8.25zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.64 1.64 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.96 3.36 4.42z" /></svg>
-                    </a>
-                </div>
-            </div>
+    <!-- ==========================================
+         RODAPÉ (FOOTER)
+    =========================================== -->
+    <footer class="relative z-10 border-t border-white/10 bg-black/50">
+        <div class="container mx-auto px-6 py-8 text-center">
+             <p class="font-inter text-xs tracking-wide text-gray-500">&copy; 2026 CFSJ Tech. Todos os direitos reservados.</p>
         </div>
     </footer>
 
+    <!-- ==========================================
+         SCRIPTS
+    =========================================== -->
+    <!-- Biblioteca Three.js para o 3D -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="script-produtos.js"></script>
+    
+    <!-- Lógica da Aplicação -->
+    <script src="script-em-construcao.js"></script>
 
 </body>
 </html>

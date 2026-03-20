@@ -1,109 +1,278 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // --- Animação 3D com Three.js ---
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('background-canvas'), alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+/**
+ * CFSJ TECH - Portfolio Application Script
+ * Architecture: Modular Subsystems with Hardware Acceleration & Memory Safety.
+ * Focus: GPU Batching, Kinematic Smoothing, Failsafes, DOM Layout Thrashing Prevention.
+ * @author Assistente de Engenharia (IA)
+ * @version 2026.1.0
+ */
 
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particleCount = 5000;
-    const posArray = new Float32Array(particleCount * 3);
+(function () {
+    'use strict';
 
-    for (let i = 0; i < particleCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 10;
-    }
+    // --- 1. SYSTEM CONFIGURATION & DESIGN TOKENS ---
 
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    
-    const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.015,
-        color: 0x00ffff,
-        blending: THREE.AdditiveBlending,
-        transparent: true,
-        opacity: 0.8
-    });
-
-    const particleMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particleMesh);
-
-    camera.position.z = 5;
-
-    const mouse = new THREE.Vector2();
-    window.addEventListener('mousemove', (event) => {
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    });
-    
-    const clock = new THREE.Clock();
-
-    const animate = () => {
-        requestAnimationFrame(animate);
-        const elapsedTime = clock.getElapsedTime();
-
-        // Animação das partículas
-        particleMesh.rotation.y = elapsedTime * 0.05;
-        particleMesh.rotation.x = elapsedTime * 0.05;
-
-        // Interação com o mouse
-        camera.position.x += (mouse.x * 0.5 - camera.position.x) * 0.05;
-        camera.position.y += (mouse.y * 0.5 - camera.position.y) * 0.05;
-        camera.lookAt(scene.position);
-
-        renderer.render(scene, camera);
-    };
-    animate();
-
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    // --- Menu Mobile ---
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    mobileMenuButton.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-    });
-
-    // --- Link Ativo da Navegação ---
-    const links = document.querySelectorAll('.nav-link');
-    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-    links.forEach(link => {
-        const linkPath = link.getAttribute('href').split('/').pop();
-        if (linkPath === currentPath) {
-            link.classList.add('active-link');
+    const CONFIG = Object.freeze({
+        selectors: {
+            canvas: 'background-canvas',
+            mobileBtn: 'mobile-menu-button',
+            mobileMenu: 'mobile-menu',
+            navLinks: '.nav-link',
+            scrollElements: '.animate-on-scroll',
+            tiltCards: '.card-3d-hover'
+        },
+        three: {
+            particleCount: 5000,
+            particleSize: 0.015,
+            color: 0x00ffff,
+            cameraZ: 5,
+            rotationSpeed: 0.05,
+            lerpFactor: 0.05 // Fator de amortecimento cinemático
+        },
+        tilt: {
+            maxRotation: 15, // Multiplicador base para os eixos X e Y
+            perspective: 1500,
+            scale: 1.03
         }
     });
 
-    // --- Animação de Scroll ---
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
+    /**
+     * Limita a taxa de disparos de uma função (Hardware Event Throttling)
+     */
+    const throttle = (func, limit) => {
+        let lastRan;
+        let lastFunc;
+        return function (...args) {
+            const context = this;
+            if (!lastRan) {
+                func.apply(context, args);
+                lastRan = Date.now();
+            } else {
+                clearTimeout(lastFunc);
+                lastFunc = setTimeout(function () {
+                    if ((Date.now() - lastRan) >= limit) {
+                        func.apply(context, args);
+                        lastRan = Date.now();
+                    }
+                }, limit - (Date.now() - lastRan));
             }
-        });
-    }, { threshold: 0.1 });
+        };
+    };
 
-    document.querySelectorAll('.animate-on-scroll').forEach(el => {
-        observer.observe(el);
-    });
-    
-    // --- Efeito 3D nos Cards ---
-    document.querySelectorAll('.card-3d-hover').forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const { width, height } = rect;
-            const rotateX = (y / height - 0.5) * -15;
-            const rotateY = (x / width - 0.5) * 15;
+    // --- 2. SUBSYSTEM: WEBGL RENDERER (Three.js) ---
+
+    const BackgroundFX = (() => {
+        let scene, camera, renderer, particleMesh;
+        let clock;
+        let mouse = { x: 0, y: 0 };
+        let animationId;
+
+        const init = () => {
+            const canvas = document.getElementById(CONFIG.selectors.canvas);
+            if (!canvas || typeof THREE === 'undefined') {
+                console.warn("[System] Motor Three.js ou Canvas não detectados. Subsistema 3D abortado.");
+                return;
+            }
+
+            // Setup de Cena e Câmera
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = CONFIG.three.cameraZ;
+
+            // Setup de Renderizador (Otimizado para Performance)
+            renderer = new THREE.WebGLRenderer({ 
+                canvas, 
+                alpha: true,
+                antialias: false, 
+                powerPreference: 'high-performance'
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limita o pixel ratio para evitar sobrecarga em telas 4K/Retina
+
+            buildParticles();
+
+            clock = new THREE.Clock();
+
+            // Event Binding
+            window.addEventListener('resize', throttle(onResize, 200), { passive: true });
+            document.addEventListener('mousemove', onMouseMove, { passive: true });
+
+            animate();
+        };
+
+        const buildParticles = () => {
+            const geometry = new THREE.BufferGeometry();
+            const count = CONFIG.three.particleCount;
+            const posArray = new Float32Array(count * 3);
+
+            for (let i = 0; i < count * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
             
-            card.style.transform = `perspective(1500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1500px) rotateX(0) rotateY(0) scale(1)';
-        });
-    });
-});
+            const material = new THREE.PointsMaterial({
+                size: CONFIG.three.particleSize,
+                color: CONFIG.three.color,
+                blending: THREE.AdditiveBlending,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            particleMesh = new THREE.Points(geometry, material);
+            scene.add(particleMesh);
+        };
+
+        const onResize = () => {
+            if (!camera || !renderer) return;
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        };
+
+        const onMouseMove = (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        };
+
+        const animate = () => {
+            animationId = requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+
+            // Rotação autônoma do enxame de partículas
+            particleMesh.rotation.y = elapsedTime * CONFIG.three.rotationSpeed;
+            particleMesh.rotation.x = elapsedTime * CONFIG.three.rotationSpeed;
+
+            // Cinemática da câmera (Interpolação Linear / Lerp para suavização)
+            camera.position.x += (mouse.x * 0.5 - camera.position.x) * CONFIG.three.lerpFactor;
+            camera.position.y += (mouse.y * 0.5 - camera.position.y) * CONFIG.three.lerpFactor;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        };
+
+        return { init };
+    })();
+
+    // --- 3. SUBSYSTEM: DOM & UI CONTROLLER ---
+
+    const UIController = (() => {
+        const init = () => {
+            setupMobileMenu();
+            setupActiveLinks();
+            setupCardTiltFX();
+        };
+
+        const setupMobileMenu = () => {
+            const btn = document.getElementById(CONFIG.selectors.mobileBtn);
+            const menu = document.getElementById(CONFIG.selectors.mobileMenu);
+            
+            if (!btn || !menu) return;
+
+            btn.addEventListener('click', () => {
+                const isHidden = menu.classList.contains('hidden');
+                menu.classList.toggle('hidden');
+                btn.setAttribute('aria-expanded', !isHidden);
+            });
+        };
+
+        const setupActiveLinks = () => {
+            const links = document.querySelectorAll(CONFIG.selectors.navLinks);
+            if (!links.length) return;
+
+            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+            
+            links.forEach(link => {
+                const linkPath = link.getAttribute('href').split('/').pop();
+                if (linkPath === currentPath) {
+                    link.classList.add('active-link');
+                }
+            });
+        };
+
+        /**
+         * Efeito 3D Hover com sincronização de quadros (rAF) para evitar Layout Thrashing
+         */
+        const setupCardTiltFX = () => {
+            const cards = document.querySelectorAll(CONFIG.selectors.tiltCards);
+            if (!cards.length) return;
+            
+            cards.forEach(card => {
+                let isTicking = false;
+
+                card.addEventListener('mousemove', (e) => {
+                    // Previne que cálculos múltiplos sejam feitos no mesmo frame (Frame Syncing)
+                    if (!isTicking) {
+                        window.requestAnimationFrame(() => {
+                            const rect = card.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const y = e.clientY - rect.top;
+                            
+                            // Cálculo vetorial de rotação baseado na constante de configuração
+                            const rotateX = (y / rect.height - 0.5) * -CONFIG.tilt.maxRotation; 
+                            const rotateY = (x / rect.width - 0.5) * CONFIG.tilt.maxRotation;
+                            
+                            card.style.transform = `perspective(${CONFIG.tilt.perspective}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${CONFIG.tilt.scale})`;
+                            isTicking = false;
+                        });
+                        isTicking = true;
+                    }
+                }, { passive: true }); // passive: true melhora a performance ao indicar que o scroll não será bloqueado
+                
+                card.addEventListener('mouseleave', () => {
+                    // Reset do transform de forma limpa e sincronizada com a GPU
+                    window.requestAnimationFrame(() => {
+                        card.style.transform = `perspective(${CONFIG.tilt.perspective}px) rotateX(0) rotateY(0) scale(1)`;
+                    });
+                }, { passive: true });
+            });
+        };
+
+        return { init };
+    })();
+
+    // --- 4. SUBSYSTEM: INTERSECTION OBSERVER ---
+
+    const ScrollObserver = (() => {
+        const init = () => {
+            if (!('IntersectionObserver' in window)) return; // Failsafe para navegadores antigos
+
+            const elements = document.querySelectorAll(CONFIG.selectors.scrollElements);
+            if (!elements.length) return;
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // Desacopla o elemento após a primeira ativação para poupar processamento e memória (GC)
+                        obs.unobserve(entry.target); 
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => observer.observe(el));
+        };
+
+        return { init };
+    })();
+
+    // --- 5. BOOTSTRAPPER ---
+
+    const boot = () => {
+        try {
+            UIController.init();
+            ScrollObserver.init();
+            BackgroundFX.init();
+            console.log("[System] CFSJ TECH Portfolio Subsystems Initialized Successfully.");
+        } catch (error) {
+            console.error("[System Error] Falha na inicialização do fluxo principal:", error);
+        }
+    };
+
+    // Inicialização segura atrelada ao ciclo de vida de renderização do DOM
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', boot);
+    } else {
+        boot();
+    }
+
+})();

@@ -1,90 +1,78 @@
-/* --- Configuração Base e Tipografia --- */
+/**
+ * CFSJ TECH - Core Stylesheet
+ * Architecture: CSS Variables, BEM-inspired scopes, Hardware Accelerated
+ * Focus: Performance, Maintainability, Accessibility (A11y)
+ */
+
+/* --- 1. Design Tokens (CSS Variables) --- */
+:root {
+    /* Colors (Sincronizado com Tailwind) */
+    --color-bg-base: #050505;
+    --color-text-base: #E0E0E0;
+    --color-text-muted: #9ca3af; /* Tailwind gray-400 */
+    --color-cyan-400: #22d3ee;
+    --color-cyan-500: #06b6d4;
+    
+    /* Glassmorphism Props */
+    --glass-bg: rgba(10, 15, 25, 0.4);
+    --glass-border: rgba(6, 182, 212, 0.15);
+    --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    
+    /* Transitions & Curves */
+    --ease-snappy: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --transition-base: 0.3s var(--ease-snappy);
+}
+
+/* --- 2. Base & Tipografia --- */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #000000;
-    color: #E0E0E0;
-    overflow-x: hidden;
+    background-color: var(--color-bg-base);
+    color: var(--color-text-base);
+    overflow: hidden; /* Mantido para a página em construção */
 }
 
 .font-exo {
     font-family: 'Exo 2', sans-serif;
 }
 
-/* --- Canvas 3D de Fundo --- */
+/* --- 3. Custom Scrollbar --- */
+::-webkit-scrollbar { 
+    width: 8px; 
+}
+::-webkit-scrollbar-track { 
+    background: var(--color-bg-base); 
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-cyan-500);
+    border-radius: 4px;
+    transition: background-color var(--transition-base);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-cyan-400); 
+}
+
+/* --- 4. Canvas 3D de Fundo --- */
 #background-canvas {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+    inset: 0; /* Propriedade lógica moderna equivalente a top:0, left:0, width:100%, height:100% */
+    z-index: 0;
+    pointer-events: none; /* Garante que o canvas não bloqueie eventos de clique (hit-testing) */
     opacity: 0.8;
 }
 
-/* --- Efeito de Vidro Aprimorado --- */
+/* --- 5. Componentes de UI --- */
+
+/* Efeito de Vidro (Glassmorphism) */
 .glassmorphism {
-    background: rgba(10, 15, 25, 0.3);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(0, 255, 255, 0.15);
-    box-shadow: 0 0 40px rgba(0, 255, 255, 0.05);
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
 }
 
-/* --- Animações --- */
-.animate-on-scroll {
-    opacity: 0;
-    transition: opacity 1s ease-out, transform 1s ease-out;
-}
-
-.is-visible {
-    opacity: 1;
-    transform: none !important;
-}
- 
-/* --- Efeitos de Hover --- */
-.cyber-button {
-    position: relative;
-    overflow: hidden;
-    transform: scale(1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.cyber-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(0, 224, 255, 0.5);
-}
-.cyber-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.4s ease;
-}
-.cyber-button:hover::before {
-    left: 100%;
-}
-
-.card-3d-hover {
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    transform-style: preserve-3d;
-}
-.card-3d-hover:hover {
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    border-color: rgba(0, 255, 255, 0.4);
-}
-
-/* --- Barra de Rolagem --- */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #000; }
-::-webkit-scrollbar-thumb {
-    background-color: #0CF;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #0CF;
-}
-
-/* --- Navegação --- */
+/* Navegação */
 .nav-link {
     position: relative;
     padding: 8px 4px;
@@ -92,32 +80,120 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #a0a0a0;
-    transition: color 0.3s ease;
+    color: var(--color-text-muted);
+    transition: color var(--transition-base);
 }
-.nav-link:hover { color: #ffffff; }
-.nav-link::before, .nav-link::after {
+
+.nav-link:hover, 
+.active-link { 
+    color: #ffffff !important; 
+}
+
+.nav-link::before, 
+.nav-link::after {
     content: '';
     position: absolute;
     width: 100%;
     height: 2px;
-    background: #0CF;
+    background: var(--color-cyan-500);
     left: 0;
     transform: scaleX(0);
-    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: transform 0.4s var(--ease-snappy);
 }
-.nav-link::before { top: 0; transform-origin: left; }
-.nav-link::after { bottom: 0; transform-origin: right; }
-.nav-link:hover::before, .nav-link:hover::after, .active-link::before, .active-link::after {
+
+.nav-link::before { 
+    top: 0; 
+    transform-origin: left; 
+}
+
+.nav-link::after { 
+    bottom: 0; 
+    transform-origin: right; 
+}
+
+.nav-link:hover::before, 
+.nav-link:hover::after, 
+.active-link::before, 
+.active-link::after {
     transform: scaleX(1);
 }
-.active-link { color: #ffffff !important; }
 
-/* Estilo para o iFrame do mapa */
-.map-container iframe {
-    filter: grayscale(100%) invert(90%) contrast(80%);
-    transition: filter 0.3s ease;
+/* Botão Cyberpunk */
+.cyber-button {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s var(--ease-bounce), box-shadow var(--transition-base);
 }
+
+.cyber-button:hover {
+    transform: scale(1.03); 
+    box-shadow: 0 0 25px rgba(6, 182, 212, 0.6);
+}
+
+/* Varredura de luz acionada via GPU (Transform no lugar de Left/Width) */
+.cyber-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease-in-out;
+    pointer-events: none;
+}
+
+.cyber-button:hover::before {
+    transform: translateX(100%);
+}
+
+/* Hover 3D em Cards */
+.card-3d-hover {
+    transition: transform 0.4s var(--ease-bounce), box-shadow 0.4s ease, border-color 0.4s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.card-3d-hover:hover {
+    box-shadow: 0 20px 40px rgba(6, 182, 212, 0.2);
+    border-color: rgba(6, 182, 212, 0.5);
+    transform: translateY(-5px) rotateX(2deg) rotateY(-2deg);
+}
+
+/* iFrame de Mapa (Dark Mode) */
+.map-container iframe {
+    filter: grayscale(100%) invert(92%) contrast(85%) hue-rotate(180deg);
+    transition: filter 0.5s ease;
+}
+
 .map-container:hover iframe {
-    filter: grayscale(0%) invert(0%) contrast(100%);
+    filter: grayscale(20%) invert(90%) contrast(100%) hue-rotate(180deg);
+}
+
+/* --- 6. Animações & Acessibilidade --- */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    will-change: opacity, transform;
+    transition: opacity 0.8s var(--ease-snappy), transform 0.8s var(--ease-snappy);
+}
+
+.is-visible {
+    opacity: 1;
+    transform: translateY(0) !important;
+}
+
+/* A11y (Acessibilidade): Desativa animações se o usuário tiver preferência por movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .animate-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+    }
 }

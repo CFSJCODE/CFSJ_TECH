@@ -1,14 +1,21 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" dir="ltr">
 <head>
+    <!-- ==========================================
+         1. METADADOS PRINCIPAIS E CONFIGURAÇÕES
+         ========================================== -->
     <meta charset="UTF-8">
-    <title>Entre em Contato e Peça um Orçamento | CFSJ TECH</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Entre em Contato e Peça um Orçamento | CFSJ TECH</title>
     <meta name="description" content="Entre em contato com a CFSJ TECH. Fale conosco por e-mail, WhatsApp ou visite nosso endereço em Belo Horizonte para transformar suas ideias em realidade.">
+    <meta name="theme-color" content="#06b6d4"> <!-- Cor Cyan-500 para navegadores mobile -->
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://cfsjcode.github.io/CFSJ_TECH/contato.html" />
 
+    <!-- ==========================================
+         2. OPEN GRAPH & TWITTER CARDS (SEO SOCIAL)
+         ========================================== -->
     <meta property="og:title" content="Entre em Contato | CFSJ TECH" />
     <meta property="og:description" content="Estamos prontos para ouvir suas necessidades e transformar suas ideias em realidade. Fale conosco." />
     <meta property="og:type" content="website" />
@@ -17,58 +24,90 @@
     <meta property="og:site_name" content="CFSJ TECH" />
     <meta property="og:locale" content="pt_BR" />
 
-    <meta name="google-site-verification" content="qpdubDpjluAAwqTiNbh7W0tYYKwAMb3COZQ6ntawjfA" />
-    
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Entre em Contato | CFSJ TECH">
     <meta name="twitter:description" content="Estamos prontos para ouvir suas necessidades e transformar suas ideias em realidade. Fale conosco.">
     <meta name="twitter:image" content="https://cfsjcode.github.io/CFSJ_TECH/assets/images/social-share-contato.jpg"> 
+
+    <!-- Verificação de Domínio -->
+    <meta name="google-site-verification" content="qpdubDpjluAAwqTiNbh7W0tYYKwAMb3COZQ6ntawjfA" />
+    
+    <!-- ==========================================
+         3. FAVICONS & ÍCONES DE APLICATIVO
+         ========================================== -->
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ==========================================
+         4. RECURSOS EXTERNOS (FONTES E ESTILOS)
+         ========================================== -->
+    <!-- Preconnect para otimização de resolução de DNS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN para prototipagem/desenvolvimento) -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style-contato.css">
 </head>
-<body class="antialiased">
+<body class="antialiased bg-[#0a0f19] text-gray-200">
 
-    <canvas id="background-canvas"></canvas>
+    <!-- Subsistema de Renderização 3D -->
+    <canvas id="background-canvas" aria-hidden="true"></canvas>
 
+    <!-- ==========================================
+         CABEÇALHO & NAVEGAÇÃO
+         ========================================== -->
     <header id="header" class="glassmorphism fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="flex items-center group">
-                <span class="font-exo text-3xl font-black text-white tracking-wider">CFSJ<span class="text-cyan-400 group-hover:text-white transition-colors duration-300">TECH</span></span>
+            
+            <!-- Logotipo -->
+            <a href="index.html" class="flex items-center group" aria-label="Página Inicial CFSJ TECH">
+                <span class="font-exo text-3xl font-black text-white tracking-wider">
+                    CFSJ<span class="text-cyan-400 group-hover:text-white transition-colors duration-300">TECH</span>
+                </span>
             </a>
-            <nav class="hidden md:flex items-center space-x-10">
+
+            <!-- Navegação Desktop -->
+            <nav class="hidden md:flex items-center space-x-10" aria-label="Navegação Principal Desktop">
                 <a href="index.html" class="nav-link">Início</a>
                 <a href="servicos.html" class="nav-link">Serviços</a>
                 <a href="portfolio.html" class="nav-link">Portfólio</a>
                 <a href="indicacao-produtos.html" class="nav-link">Indicação De Produtos</a>
                 <a href="sobre.html" class="nav-link">Sobre</a>
-                <a href="contato.html" class="nav-link">Contato</a>
+                <a href="contato.html" class="nav-link" aria-current="page">Contato</a>
             </nav>
+
+            <!-- Ações Rápidas & Toggle Mobile -->
             <div class="flex items-center">
-                <a href="contato.html" class="hidden sm:block bg-cyan-500 text-black font-exo font-bold py-2 px-6 rounded-md text-sm transition-all duration-300 cyber-button">
+                <a href="contato.html" class="hidden sm:block bg-cyan-500 text-black font-exo font-bold py-2 px-6 rounded-md text-sm transition-all duration-300 cyber-button" aria-label="Solicitar um orçamento agora">
                     Solicitar Orçamento
                 </a>
-                <button id="mobile-menu-button" class="md:hidden ml-4 p-2 text-gray-300 hover:text-cyan-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                
+                <button id="mobile-menu-button" class="md:hidden ml-4 p-2 text-gray-300 hover:text-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menu de navegação">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
                 </button>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden glassmorphism">
+
+        <!-- Navegação Mobile -->
+        <nav id="mobile-menu" class="hidden md:hidden glassmorphism" aria-label="Navegação Principal Mobile">
             <a href="index.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Início</a>
             <a href="servicos.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Serviços</a>
             <a href="portfolio.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Portfólio</a>
             <a href="indicacao-produtos.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Indicação De Produtos</a>
             <a href="sobre.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Sobre Nós</a>
-            <a href="contato.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20">Contato</a>
-        </div>
+            <a href="contato.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20" aria-current="page">Contato</a>
+        </nav>
     </header>
 
+    <!-- ==========================================
+         CONTEÚDO PRINCIPAL
+         ========================================== -->
     <main>
+        <!-- Seção Hero -->
         <section id="contato-hero" class="pt-32 md:pt-40 pb-16 md:pb-20 relative flex items-center justify-center">
             <div class="container mx-auto px-6 text-center z-10 relative">
                 <div class="animate-on-scroll" style="transform: translateY(50px);">
@@ -82,79 +121,112 @@
             </div>
         </section>
 
+        <!-- Seção de Detalhes de Contato & Mapa -->
         <section id="contact-details" class="pb-16 md:pb-20 relative">
             <div class="container mx-auto px-6 z-10 relative">
                 <div class="max-w-6xl mx-auto glassmorphism rounded-xl p-8 md:p-10 animate-on-scroll card-3d-hover" style="transform: translateY(50px);">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                        <div>
+                        
+                        <!-- Dados de Contato (Semântica: address) -->
+                        <address class="not-italic">
                             <h2 class="font-exo text-2xl md:text-3xl font-bold text-white mb-8">Informações de Contato</h2>
+                            
                             <div class="space-y-6 text-gray-300">
-                                <a href="mailto:contato@cfsjtech.com" class="flex items-center gap-4 group">
+                                <!-- E-mail -->
+                                <a href="mailto:contato@cfsjtech.com" class="flex items-center gap-4 group focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded p-1" aria-label="Enviar e-mail para contato@cfsjtech.com">
                                     <div class="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center border border-cyan-500/30 group-hover:bg-cyan-500/20 transition-colors">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-2 4v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-2 4v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                                        </svg>
                                     </div>
                                     <div>
                                         <p class="font-bold text-white">Email</p>
                                         <p class="text-gray-300 group-hover:text-cyan-400 transition-colors">contato@cfsjtech.com</p>
                                     </div>
                                 </a>
-                                <a href="https://wa.me/5531997697561" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 group">
+
+                                <!-- WhatsApp -->
+                                <a href="https://wa.me/5531997697561" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 group focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded p-1" aria-label="Iniciar conversa no WhatsApp com o número +55 31 99769-7561">
                                     <div class="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center border border-cyan-500/30 group-hover:bg-cyan-500/20 transition-colors">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.447-4.435-9.884-9.888-9.884-5.448 0-9.886 4.434-9.889 9.884-.001 2.225.651 4.315 1.907 6.084l-1.214 4.433 4.572-1.21z"/></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.447-4.435-9.884-9.888-9.884-5.448 0-9.886 4.434-9.889 9.884-.001 2.225.651 4.315 1.907 6.084l-1.214 4.433 4.572-1.21z"/>
+                                        </svg>
                                     </div>
                                     <div>
                                         <p class="font-bold text-white">WhatsApp</p>
                                         <p class="text-gray-300 group-hover:text-cyan-400 transition-colors">+55 (31) 99769-7561</p>
                                     </div>
                                 </a>
-                                <div class="flex items-start gap-4">
+
+                                <!-- Localização Físico -->
+                                <div class="flex items-start gap-4 p-1">
                                     <div class="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center border border-cyan-500/30 flex-shrink-0 mt-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
                                     </div>
                                     <div>
                                         <p class="font-bold text-white">Endereço</p>
                                         <p>R. João Alexandre Píres, 730 - Milionários, Belo Horizonte - MG, 30620-080</p>
                                         <p class="text-sm text-gray-400 mt-1">
-                                            Junto ao <a href="https://cfsjcode.github.io/Advocacia-Dr.-Claudio-Francisco/" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">Escritório de Advocacia Dr. Cláudio Francisco</a>.
+                                            Junto ao <a href="https://cfsjcode.github.io/Advocacia-Dr.-Claudio-Francisco/" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline focus:outline-none focus:ring-1 focus:ring-cyan-500 rounded">Escritório de Advocacia Dr. Cláudio Francisco</a>.
                                         </p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </address>
+
+                        <!-- Componente de Mapa iFrame -->
                         <div class="rounded-lg overflow-hidden border border-cyan-500/30 map-container h-80 lg:h-full">
                             <iframe
+                                title="Mapa de localização da CFSJ Tech em Belo Horizonte"
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3750.155799796035!2d-44.00416902476964!3d-19.96002348143924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa6bdf9c7354979%3A0xb363c32e9f333f20!2sR.%20Jo%C3%A3o%20Alexandre%20P%C3%ADres%2C%20730%20-%20Milion%C3%A1rios%2C%20Belo%20Horizonte%20-%20MG%2C%2030620-080!5e0!3m2!1spt-BR!2sbr!4v1700685241000!5m2!1spt-BR!2sbr"
                                 width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                             </iframe>
                         </div>
+
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-black/50 border-t border-white/10 mt-20">
+    <!-- ==========================================
+         RODAPÉ
+         ========================================== -->
+    <footer class="bg-black/50 border-t border-white/10 mt-20" aria-label="Rodapé Principal">
         <div class="container mx-auto px-6 py-8">
             <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+                
                 <div class="mb-6 md:mb-0">
                     <span class="font-exo text-xl font-bold text-white">CFSJ<span class="text-cyan-400">TECH</span></span>
-                    <p class="text-xs text-gray-500 mt-2">© 2025 CFSJ Tech. Todos os direitos reservados.</p>
+                    <p class="text-xs text-gray-500 mt-2">© 2026 CFSJ Tech. Todos os direitos reservados.</p>
                 </div>
+                
+                <!-- Redes Sociais -->
                 <div class="flex items-center space-x-4">
-                    <a href="#" class="group w-10 h-10 rounded-full bg-gray-800 flex justify-center items-center transition-all duration-300 hover:bg-white hover:scale-110">
-                        <svg class="w-6 h-6 text-gray-400 group-hover:text-pink-600 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c-4.42 0-7.73 3.255-7.73 7.222 0 3.124 1.887 5.86 4.54 6.812.33.06.45-.143.45-.317 0-.156-.006-1.002-.009-1.828-1.83.398-2.217-.88-2.217-.88-.3-.762-.732-.965-.732-.965-.598-.408.045-.398.045-.398.66.047 1.006.677 1.006.677.587 1.003 1.54 1.16 1.914.886.06-.69.23-1.16.42-1.428-1.46-.166-3-.73-3-3.255 0-.72.258-1.31.678-1.77-.068-.166-.293-.836.064-1.745 0 0 .55-.176 1.8.674a6.27 6.27 0 011.636-.22c.55.002 1.1.076 1.636.22 1.25-.85 1.8-.674 1.8-.674.357.91.132 1.58.064 1.745.42.46.678 1.05.678 1.77 0 2.533-1.54 3.087-3.01 3.25.236.203.444.606.444 1.222 0 .88-.008 1.59-.008 1.806 0 .176.12.38.454.316 2.65-1.02 4.537-3.688 4.537-6.81 0-3.967-3.31-7.222-7.73-7.222z" clip-rule="evenodd" /></svg>
+                    <a href="#" class="group w-10 h-10 rounded-full bg-gray-800 flex justify-center items-center transition-all duration-300 hover:bg-white hover:scale-110 focus:outline-none focus:ring-2 focus:ring-cyan-500" aria-label="Siga-nos no Instagram">
+                        <svg class="w-6 h-6 text-gray-400 group-hover:text-pink-600 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12.315 2c-4.42 0-7.73 3.255-7.73 7.222 0 3.124 1.887 5.86 4.54 6.812.33.06.45-.143.45-.317 0-.156-.006-1.002-.009-1.828-1.83.398-2.217-.88-2.217-.88-.3-.762-.732-.965-.732-.965-.598-.408.045-.398.045-.398.66.047 1.006.677 1.006.677.587 1.003 1.54 1.16 1.914.886.06-.69.23-1.16.42-1.428-1.46-.166-3-.73-3-3.255 0-.72.258-1.31.678-1.77-.068-.166-.293-.836.064-1.745 0 0 .55-.176 1.8.674a6.27 6.27 0 011.636-.22c.55.002 1.1.076 1.636.22 1.25-.85 1.8-.674 1.8-.674.357.91.132 1.58.064 1.745.42.46.678 1.05.678 1.77 0 2.533-1.54 3.087-3.01 3.25.236.203.444.606.444 1.222 0 .88-.008 1.59-.008 1.806 0 .176.12.38.454.316 2.65-1.02 4.537-3.688 4.537-6.81 0-3.967-3.31-7.222-7.73-7.222z" clip-rule="evenodd" />
+                        </svg>
                     </a>
-                    <a href="#" class="group w-10 h-10 rounded-full bg-gray-800 flex justify-center items-center transition-all duration-300 hover:bg-white hover:scale-110">
-                        <svg class="w-6 h-6 text-gray-400 group-hover:text-blue-600 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.25 6.5 1.75 1.75 0 016.5 8.25zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.64 1.64 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.96 3.36 4.42z" /></svg>
+                    <a href="#" class="group w-10 h-10 rounded-full bg-gray-800 flex justify-center items-center transition-all duration-300 hover:bg-white hover:scale-110 focus:outline-none focus:ring-2 focus:ring-cyan-500" aria-label="Siga-nos no LinkedIn">
+                        <svg class="w-6 h-6 text-gray-400 group-hover:text-blue-600 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.25 6.5 1.75 1.75 0 016.5 8.25zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.64 1.64 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.96 3.36 4.42z" />
+                        </svg>
                     </a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
-    <script src="script-contatos.js"></script>
+    <!-- ==========================================
+         5. SCRIPTS (CARREGAMENTO DEFERIDO)
+         ========================================== -->
+    <!-- Carregamos a engine 3D e o script local usando defer para evitar o bloqueio de renderização do DOM -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="script-contatos.js" defer></script>
 
 </body>
 </html>

@@ -1,51 +1,62 @@
 /**
  * CFSJ TECH - Core Application Script
- * Architecture: Modular Pattern with Global Exposure for Legacy HTML Compatibility.
- * Focus: Performance (Render Batching), Maintainability (Separation of Concerns), Accessibility.
- * @author Cláudio Francisco (Refatoração via Assistente IA)
- * @version 2025.1.1
+ * Architecture: Modern Modular Subsystems with Global Exposure for Legacy HTML.
+ * Focus: High-Performance Rendering, Memory Safety, Kinematic Smoothing, Accessibility.
+ * @author Cláudio Francisco (Refatorado via Assistente de Engenharia IA)
+ * @version 2026.1.0
  */
 
-(function(global) {
+(function (global) {
     'use strict';
 
-    // --- 1. CONFIGURATION & UTILS ---
-    
-    const CONFIG = {
+    // --- 1. SYSTEM CONFIGURATION & UTILITIES ---
+
+    const CONFIG = Object.freeze({
         animation: {
             particleCount: 3000,
             particleSize: 0.015,
-            color: 0x00ffff,
-            mouseSensitivity: 0.0005
+            baseColor: 0x00ffff,
+            mouseSensitivity: 0.0005,
+            lerpFactor: 0.05 // Fator de interpolação para suavização física (novo)
         },
         dom: {
             gridId: 'products-grid',
             titleId: 'category-title',
             sectionCatId: 'categories-section',
             sectionProdId: 'products-section',
-            canvasId: 'background-canvas'
+            canvasId: 'background-canvas',
+            mobileBtnId: 'mobile-menu-button',
+            mobileMenuId: 'mobile-menu'
         }
-    };
+    });
 
     /**
-     * Throttles a function to limit execution frequency.
-     * Essential for scroll and resize events.
+     * Limita a taxa de disparos de uma função (Hardware Event Throttling)
+     * @param {Function} func - Função a ser encapsulada
+     * @param {number} limit - Tempo limite em milissegundos
      */
     const throttle = (func, limit) => {
-        let inThrottle;
-        return function() {
-            const args = arguments;
+        let lastFunc;
+        let lastRan;
+        return function (...args) {
             const context = this;
-            if (!inThrottle) {
+            if (!lastRan) {
                 func.apply(context, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
+                lastRan = Date.now();
+            } else {
+                clearTimeout(lastFunc);
+                lastFunc = setTimeout(function () {
+                    if ((Date.now() - lastRan) >= limit) {
+                        func.apply(context, args);
+                        lastRan = Date.now();
+                    }
+                }, limit - (Date.now() - lastRan));
             }
-        }
+        };
     };
 
-    // --- 2. DATA LAYER (Model) ---
-    
+    // --- 2. DATA LAYER (Read-Only Model) ---
+
     const productsDB = Object.freeze({
         'conectividade': [
             {
@@ -117,45 +128,66 @@
         'energia': 'Energia & Acessórios Elétricos'
     });
 
-    // --- 3. UI CONTROLLER (View Logic) ---
-    
-    const UIController = (() => {
-        // Cache DOM elements
-        let elements = {};
+    // --- 3. UI CONTROLLER (DOM Management & Rendering) ---
 
-        const cacheElements = () => {
-            elements = {
+    const UIController = (() => {
+        let refs = {};
+
+        const init = () => {
+            refs = {
                 grid: document.getElementById(CONFIG.dom.gridId),
                 title: document.getElementById(CONFIG.dom.titleId),
                 secCats: document.getElementById(CONFIG.dom.sectionCatId),
                 secProds: document.getElementById(CONFIG.dom.sectionProdId),
-                mobileBtn: document.getElementById('mobile-menu-button'),
-                mobileMenu: document.getElementById('mobile-menu')
+                mobileBtn: document.getElementById(CONFIG.dom.mobileBtnId),
+                mobileMenu: document.getElementById(CONFIG.dom.mobileMenuId),
+                navLinks: document.querySelectorAll('.nav-link')
             };
+
+            bindEvents();
+            setActiveNavLink();
         };
 
-        const createProductCard = (prod, index) => {
-            // Using template literals efficiently
-            // Added loading="lazy" for performance
-            // Added aria-label for accessibility
-            const delay = index * 50; // Reduced delay for snappier feel
+        const bindEvents = () => {
+            if (refs.mobileBtn) {
+                refs.mobileBtn.addEventListener('click', toggleMobileMenu);
+            }
+        };
+
+        const setActiveNavLink = () => {
+            if (!refs.navLinks?.length) return;
+            
+            const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+            
+            refs.navLinks.forEach(link => {
+                const isActive = link.getAttribute('href') === currentFile;
+                link.classList.toggle('text-cyan-400', isActive);
+                link.classList.toggle('font-bold', isActive);
+                link.classList.toggle('active-link', isActive);
+                link.classList.toggle('text-gray-300', !isActive);
+            });
+        };
+
+        const createProductCard = ({ title, desc, link, image, badge }, index) => {
+            const delay = index * 40; // Otimizado para cadência visual mais fluida
             return `
-                <article class="glassmorphism rounded-xl overflow-hidden group hover:transform hover:-translate-y-2 transition-all duration-300 card-product fade-in flex flex-col h-full" style="animation-delay: ${delay}ms">
+                <article class="glassmorphism rounded-xl overflow-hidden group hover:transform hover:-translate-y-2 transition-all duration-300 card-product fade-in flex flex-col h-full" style="animation-delay: ${delay}ms" aria-label="Produto: ${title}">
                     <div class="relative h-48 w-full overflow-hidden bg-[#0a0f19]/50">
-                        <img src="${prod.image}" 
-                             alt="${prod.title}" 
+                        <img src="${image}" 
+                             alt="Imagem de ${title}" 
                              loading="lazy" 
                              width="600" height="400"
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out">
                         <span class="absolute top-2 right-2 bg-cyan-500 text-black text-xs font-bold px-2 py-1 rounded shadow-lg shadow-cyan-500/20">
-                            ${prod.badge}
+                            ${badge}
                         </span>
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="font-exo text-xl font-bold text-white mb-2 line-clamp-2">${prod.title}</h3>
-                        <p class="text-gray-400 text-sm mb-6 flex-grow line-clamp-3">${prod.desc}</p>
-                        <a href="${prod.link}" target="_blank" rel="noopener noreferrer" 
-                           class="mt-auto w-full block text-center border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black font-exo font-bold py-3 rounded transition-all duration-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+                        <h3 class="font-exo text-xl font-bold text-white mb-2 line-clamp-2">${title}</h3>
+                        <p class="text-gray-400 text-sm mb-6 flex-grow line-clamp-3">${desc}</p>
+                        <a href="${link}" target="_blank" rel="noopener noreferrer" 
+                           class="mt-auto w-full block text-center border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black font-exo font-bold py-3 rounded transition-all duration-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
+                           aria-label="Ver detalhes de ${title} no Mercado Livre">
                             Ver no Mercado Livre
                         </a>
                     </div>
@@ -164,108 +196,89 @@
         };
 
         const showProducts = (categoryKey) => {
-            if (!elements.grid) cacheElements();
-            
             const products = productsDB[categoryKey];
             if (!products) {
-                console.warn(`[CFSJ] Category not found: ${categoryKey}`);
+                console.warn(`[System] Referência de categoria inválida ou inexistente: ${categoryKey}`);
                 return;
             }
 
-            // Update Content
-            elements.title.textContent = categoryTitles[categoryKey] || 'Produtos';
-            
-            // Batch DOM update
+            // Renderização em Batch via API de Animação do Browser
             requestAnimationFrame(() => {
-                elements.grid.innerHTML = products.map(createProductCard).join('');
+                if (refs.title) refs.title.textContent = categoryTitles[categoryKey] ?? 'Produtos';
+                if (refs.grid) refs.grid.innerHTML = products.map(createProductCard).join('');
                 
-                // View Transition
-                elements.secCats.classList.add('hidden');
-                elements.secProds.classList.remove('hidden');
+                refs.secCats?.classList.add('hidden');
+                refs.secProds?.classList.remove('hidden');
                 
-                // Accessibility Focus Management
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         };
 
         const hideProducts = () => {
-            if (!elements.secCats) cacheElements();
+            refs.secProds?.classList.add('hidden');
+            refs.secCats?.classList.remove('hidden');
 
-            elements.secProds.classList.add('hidden');
-            elements.secCats.classList.remove('hidden');
-
-            // Reset animations for re-entry
-            const cards = document.querySelectorAll('.card-category');
-            cards.forEach(card => {
+            // Force Reflow para reiniciar animações CSS
+            document.querySelectorAll('.card-category').forEach(card => {
                 card.classList.remove('animate-on-scroll', 'is-visible');
-                void card.offsetWidth; // Force Reflow
+                void card.offsetWidth; 
                 card.classList.add('animate-on-scroll');
             });
             
-            // Re-trigger observer
             ScrollObserver.observeElements();
         };
 
         const toggleMobileMenu = () => {
-            if (!elements.mobileMenu) cacheElements();
-            const isHidden = elements.mobileMenu.classList.contains('hidden');
+            if (!refs.mobileMenu || !refs.mobileBtn) return;
             
-            if (isHidden) {
-                elements.mobileMenu.classList.remove('hidden');
-                elements.mobileBtn.setAttribute('aria-expanded', 'true');
-            } else {
-                elements.mobileMenu.classList.add('hidden');
-                elements.mobileBtn.setAttribute('aria-expanded', 'false');
-            }
+            const isHidden = refs.mobileMenu.classList.contains('hidden');
+            refs.mobileMenu.classList.toggle('hidden', !isHidden);
+            refs.mobileBtn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
         };
 
-        return {
-            init: cacheElements,
-            showProducts,
-            hideProducts,
-            toggleMobileMenu
-        };
+        return { init, showProducts, hideProducts };
     })();
 
-    // --- 4. VISUAL EFFECTS (Three.js & Observer) ---
+    // --- 4. HARDWARE-ACCELERATED VISUALS (Three.js Subsystem) ---
 
     const BackgroundFX = (() => {
-        let scene, camera, renderer, particles, mouse = { x: 0, y: 0 };
+        let scene, camera, renderer, particles;
+        // Estruturas de controle para suavização cinemática (Lerp)
+        let mouse = { x: 0, y: 0 };
+        let targetRotation = { x: 0, y: 0 };
         let animationId;
 
         const init = () => {
             const canvas = document.getElementById(CONFIG.dom.canvasId);
-            if (!canvas || !window.WebGLRenderingContext) return;
+            if (!canvas || !window.WebGLRenderingContext || typeof THREE === 'undefined') return;
 
-            // Scene Setup
+            // Setup
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             camera.position.z = 4;
 
-            // Renderer Optimization
             renderer = new THREE.WebGLRenderer({ 
                 canvas, 
                 alpha: true, 
-                antialias: false, // Performance over minor edge smoothing for background
+                antialias: false, 
                 powerPreference: 'high-performance'
             });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            // Particles
-            const geometry = new THREE.BufferGeometry();
+            // Geometry & Particles
             const count = CONFIG.animation.particleCount;
             const posArray = new Float32Array(count * 3);
-
             for(let i = 0; i < count * 3; i++) {
                 posArray[i] = (Math.random() - 0.5) * 15;
             }
 
+            const geometry = new THREE.BufferGeometry();
             geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
             
             const material = new THREE.PointsMaterial({
                 size: CONFIG.animation.particleSize,
-                color: CONFIG.animation.color,
+                color: CONFIG.animation.baseColor,
                 transparent: true,
                 opacity: 0.6,
                 blending: THREE.AdditiveBlending
@@ -274,21 +287,22 @@
             particles = new THREE.Points(geometry, material);
             scene.add(particles);
 
-            // Events
+            // Bind Events
             window.addEventListener('resize', throttle(onResize, 200));
-            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mousemove', onMouseMove, { passive: true });
 
             animate();
         };
 
         const onResize = () => {
+            if (!camera || !renderer) return;
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         };
 
         const onMouseMove = (event) => {
-            // Normalize mouse position
+            // Mapeamento normalizado (-1 a 1)
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
         };
@@ -296,12 +310,16 @@
         const animate = () => {
             animationId = requestAnimationFrame(animate);
             
-            // Rotation Logic
-            particles.rotation.y += 0.001; // Constant slow rotation
+            // Definição de vetores alvo com base no input do mouse
+            targetRotation.x = -mouse.y * CONFIG.animation.mouseSensitivity;
+            targetRotation.y = mouse.x * CONFIG.animation.mouseSensitivity;
+
+            // Aplicação de interpolação linear (Lerp) para física suavizada
+            particles.rotation.x += (targetRotation.x - particles.rotation.x) * CONFIG.animation.lerpFactor;
+            particles.rotation.y += (targetRotation.y - particles.rotation.y) * CONFIG.animation.lerpFactor;
             
-            // Interactive rotation (Lerping for smoothness could be added, keeping it raw for responsiveness)
-            particles.rotation.x += -mouse.y * CONFIG.animation.mouseSensitivity;
-            particles.rotation.y += mouse.x * CONFIG.animation.mouseSensitivity;
+            // Rotação autônoma base (idle state)
+            particles.rotation.y += 0.001; 
 
             renderer.render(scene, camera);
         };
@@ -309,10 +327,14 @@
         return { init };
     })();
 
+    // --- 5. INTERSECTION OBSERVER SUBSYSTEM ---
+
     const ScrollObserver = (() => {
         let observer;
 
         const init = () => {
+            if (!('IntersectionObserver' in window)) return; // Failsafe para browsers antigos
+
             const options = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
             
             observer = new IntersectionObserver((entries, obs) => {
@@ -328,38 +350,37 @@
         };
 
         const observeElements = () => {
+            if (!observer) return;
             document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
         };
 
         return { init, observeElements };
     })();
 
-    // --- 5. INITIALIZATION ---
+    // --- 6. CORE INITIALIZATION PIPELINE ---
 
-    const initApp = () => {
-        UIController.init();
-        BackgroundFX.init();
-        ScrollObserver.init();
-
-        // Event Binding for Mobile Menu
-        const mobileBtn = document.getElementById('mobile-menu-button');
-        if (mobileBtn) {
-            mobileBtn.addEventListener('click', UIController.toggleMobileMenu);
+    const initSystem = () => {
+        try {
+            UIController.init();
+            BackgroundFX.init();
+            ScrollObserver.init();
+            console.log("[System] CFSJ TECH Core Architecture Initialized [v2026.1.0]");
+        } catch (error) {
+            console.error("[System Error] Falha na inicialização do Core:", error);
         }
-
-        console.log("CFSJ TECH System Initialized [v2025]");
     };
 
-    // --- 6. PUBLIC API EXPOSURE ---
-    // Expose necessary functions to window because HTML uses onclick attributes
+    // --- 7. PUBLIC API EXPOSURE ---
+    
+    // Exportação explícita para compatibilidade com eventos HTML inline (ex: onclick="showProducts('...')")
     global.showProducts = UIController.showProducts;
     global.hideProducts = UIController.hideProducts;
 
-    // Start
+    // Bootloader
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initApp);
+        document.addEventListener('DOMContentLoaded', initSystem);
     } else {
-        initApp();
+        initSystem();
     }
 
 })(window);
