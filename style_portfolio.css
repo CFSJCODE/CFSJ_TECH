@@ -1,0 +1,230 @@
+/**
+ * ============================================================================
+ * PORTFÓLIO - CSS UNIFICADO E OTIMIZADO
+ * Engenharia de Sistemas, Inovação e Portfólio
+ * ============================================================================
+ */
+
+/* --- 1. Variáveis Globais e Reset --- */
+:root {
+    --cyan-primary: #00f2ff;
+    --cyan-glow: rgba(0, 242, 255, 0.4);
+    --glass-bg: rgba(10, 15, 25, 0.85);
+    --transition: all 0.4s ease;
+    --transition-standard: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #050505;
+    color: #E0E0E0;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+.font-exo { font-family: 'Exo 2', sans-serif; }
+.fira-code { font-family: 'Fira Code', monospace; }
+
+/* --- 2. Canvas 3D de Fundo --- */
+#background-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+/* --- 3. Componentes Glassmorphism --- */
+.glassmorphism, .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    transition: var(--transition-standard);
+}
+
+.glass-card:hover, .project-card:hover {
+    border-color: var(--cyan-primary);
+    box-shadow: 0 0 25px var(--cyan-glow);
+    transform: translateY(-5px);
+}
+
+/* --- 4. Animações de Scroll --- */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0) !important;
+}
+
+/* --- 5. Botões e Interatividade --- */
+.cyber-button {
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-standard);
+}
+
+.cyber-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px var(--cyan-glow);
+}
+
+.cyber-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.cyber-button:hover::before { 
+    left: 100%; 
+}
+
+/* Filtros de Categoria */
+.filter-btn {
+    transition: var(--transition-standard);
+    cursor: pointer;
+}
+
+.filter-btn.active {
+    background-color: var(--cyan-primary) !important;
+    color: #000 !important;
+    border-color: var(--cyan-primary) !important;
+    box-shadow: 0 0 15px var(--cyan-glow);
+}
+
+/* --- 6. Navegação (Header e Setas do Modal) --- */
+.nav-link {
+    position: relative;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #a0a0a0;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover, .active-link { 
+    color: #ffffff !important; 
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: var(--cyan-primary);
+    bottom: -4px;
+    left: 0;
+    transform: scaleX(0);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    transform-origin: right;
+}
+
+.nav-link:hover::after, .active-link::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Setas de Navegação (Carrossel e Galeria) */
+.nav-btn {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 50%;
+    transition: var(--transition-standard);
+}
+
+.nav-btn:hover {
+    background: var(--cyan-primary);
+    color: #000;
+    box-shadow: 0 0 15px var(--cyan-glow);
+}
+
+/* --- 7. Cards de Projeto & Badges --- */
+.project-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+}
+
+.project-image-container {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+    background: #000;
+}
+
+.project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card:hover .project-image { 
+    transform: scale(1.1); 
+}
+
+.category-badge {
+    background: rgba(0, 242, 255, 0.15);
+    border: 1px solid var(--cyan-primary);
+    color: var(--cyan-primary);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* --- 8. Motor de Modal Unificado --- */
+#modal-overlay {
+    /* Controle de display e z-index gerenciado primariamente pelo TailwindCSS + JS */
+    transition: opacity 0.4s ease;
+}
+
+#modal-overlay.active {
+    display: flex !important;
+    opacity: 1;
+}
+
+.modal-content-wrapper {
+    transform: scale(0.9);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#modal-overlay.active .modal-content-wrapper { 
+    transform: scale(1); 
+}
+
+/* --- 9. Personalização da Scrollbar --- */
+::-webkit-scrollbar { 
+    width: 6px; 
+}
+
+::-webkit-scrollbar-track { 
+    background: #050505; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1f2937;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cyan-primary);
+    box-shadow: 0 0 10px var(--cyan-glow);
+}

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfólio de Projetos | CFSJ TECH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conheça os projetos realizados pela CFSJ TECH em Inteligência Artificial, Infraestrutura de TI, Redes e Sistemas Embarcados.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;800;900&family=Inter:wght@300;400;500&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style_portfolio.css">
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body class="antialiased bg-black selection:bg-cyan-500/30">
+
+    <canvas id="background-canvas" class="fixed inset-0 z-0 pointer-events-none"></canvas>
+
+    <header id="header" class="glassmorphism fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center relative z-10">
+            <a href="index.html" class="flex items-center group">
+                <span class="font-exo text-3xl font-black text-white tracking-wider">CFSJ<span class="text-cyan-400 group-hover:text-white transition-colors duration-300">TECH</span></span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-10">
+                <a href="index.html" class="nav-link text-gray-300 hover:text-cyan-400 transition-colors">Início</a>
+                <a href="servicos.html" class="nav-link text-gray-300 hover:text-cyan-400 transition-colors">Serviços</a>
+                <a href="portfolio.html" class="nav-link active-link text-cyan-400 font-bold">Portfólio</a> 
+                <a href="indicacao-produtos.html" class="nav-link text-gray-300 hover:text-cyan-400 transition-colors">Indicação De Produtos</a>
+                <a href="sobre.html" class="nav-link text-gray-300 hover:text-cyan-400 transition-colors">Sobre</a>
+                <a href="contato.html" class="nav-link text-gray-300 hover:text-cyan-400 transition-colors">Contato</a>
+            </nav>
+            <div class="flex items-center">
+                <a href="contato.html" class="hidden sm:block bg-cyan-500 hover:bg-cyan-400 text-black font-exo font-bold py-2 px-6 rounded-md text-sm transition-all duration-300 cyber-button shadow-[0_0_15px_rgba(6,182,212,0.5)]">
+                    Solicitar Orçamento
+                </a>
+                <button id="mobile-menu-button" class="md:hidden ml-4 p-2 text-gray-300 hover:text-cyan-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden glassmorphism border-t border-cyan-500/20 relative z-10 bg-black/90 backdrop-blur-lg">
+            <a href="index.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20 transition-colors">Início</a>
+            <a href="servicos.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20 transition-colors">Serviços</a>
+            <a href="portfolio.html" class="block py-3 px-6 text-sm text-cyan-400 font-bold bg-cyan-500/10">Portfólio</a>
+            <a href="indicacao-produtos.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20 transition-colors">Indicação De Produtos</a>
+            <a href="sobre.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20 transition-colors">Sobre Nós</a>
+            <a href="contato.html" class="block py-3 px-6 text-sm text-gray-200 hover:bg-cyan-500/20 transition-colors">Contato</a>
+        </div>
+    </header>
+
+    <main class="relative z-10">
+        <section id="portfolio-hero" class="pt-32 md:pt-40 pb-16 relative text-center px-6">
+            <div class="container mx-auto z-10 relative">
+                <div class="animate-on-scroll">
+                    <h1 class="font-exo text-4xl md:text-6xl font-black text-white uppercase mb-6 drop-shadow-[0_0_10px_rgba(6,182,212,0.3)]">
+                        Nossos <span class="text-cyan-400">Projetos</span>
+                    </h1>
+                    <p class="max-w-3xl mx-auto text-gray-300 text-lg md:text-xl font-light">
+                        Engenharia de Sistemas e Inovação: do desenvolvimento de software forense à infraestrutura de alta performance.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-12 px-6">
+            <div class="container mx-auto flex flex-wrap justify-center gap-4 animate-on-scroll">
+                <button onclick="filterProjects('all')" class="filter-btn active px-6 py-2 rounded-full border border-cyan-400 text-black bg-cyan-500 font-exo text-sm font-bold transition-colors duration-300" data-filter="all">Todos</button>
+                <button onclick="filterProjects('software')" class="filter-btn px-6 py-2 rounded-full border border-gray-700 bg-transparent text-gray-400 font-exo text-sm hover:border-cyan-400 hover:text-white transition-colors duration-300" data-filter="software">Software & Forense</button>
+                <button onclick="filterProjects('hardware')" class="filter-btn px-6 py-2 rounded-full border border-gray-700 bg-transparent text-gray-400 font-exo text-sm hover:border-cyan-400 hover:text-white transition-colors duration-300" data-filter="hardware">Hardware & Infra</button>
+                <button onclick="filterProjects('redes')" class="filter-btn px-6 py-2 rounded-full border border-gray-700 bg-transparent text-gray-400 font-exo text-sm hover:border-cyan-400 hover:text-white transition-colors duration-300" data-filter="redes">Redes</button>
+                <button onclick="filterProjects('mobile')" class="filter-btn px-6 py-2 rounded-full border border-gray-700 bg-transparent text-gray-400 font-exo text-sm hover:border-cyan-400 hover:text-white transition-colors duration-300" data-filter="mobile">MDM & Mobile</button>
+            </div>
+        </section>
+
+<section id="gallery" class="pb-24 px-6">
+            <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-500" id="projects-grid">
+                
+                <div class="glassmorphism project-card project-item group border border-white/5 hover:border-cyan-500/50 transition-colors duration-300 rounded-xl overflow-hidden shadow-lg hover:shadow-cyan-500/20" data-category="hardware">
+                    <div class="project-image-container relative overflow-hidden h-64 bg-slate-900">
+                        <img src="https://i.imgur.com/hGyrwFa.jpg" alt="Manutenção de Desktop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                        <div class="absolute top-4 left-4"><span class="category-badge bg-cyan-500/20 text-cyan-300 text-xs px-2 py-1 rounded border border-cyan-500/30 backdrop-blur-md">Hardware</span></div>
+                    </div>
+                    <div class="p-6 flex flex-col h-[calc(100%-16rem)] bg-black/40 backdrop-blur-sm">
+                        <h3 class="font-exo text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Manutenção Avançada em Desktops</h3>
+                        <p class="text-gray-400 text-sm mb-4">Intervenção técnica completa: desmontagem, higienização de componentes, reestruturação térmica e otimização de fluxo de ar.</p>
+                        <div class="mt-auto flex items-center text-cyan-400 text-sm font-bold cursor-pointer hover:underline" onclick="openModal('desktop-maintenance')">
+                            VER GALERIA (13 FOTOS) <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glassmorphism project-card project-item group border border-white/5 hover:border-cyan-500/50 transition-colors duration-300 rounded-xl overflow-hidden shadow-lg hover:shadow-cyan-500/20" data-category="software">
+                    <div class="project-image-container bg-slate-900 flex items-center justify-center overflow-hidden h-64 relative">
+                        <div class="absolute inset-0 opacity-20 font-fira-code text-[8px] text-cyan-400 p-4 leading-tight">
+                            import winreg<br>def audit_usb():<br> &nbsp;key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\USBSTOR")
+                        </div>
+                        <div class="relative z-10 text-center">
+                            <span class="category-badge mb-2 inline-block bg-cyan-500/20 text-cyan-300 text-xs px-2 py-1 rounded border border-cyan-500/30">Cibersegurança</span>
+                            <h3 class="font-exo text-2xl font-bold text-white">WinReg USB Auditor</h3>
+                            <p class="text-[10px] text-cyan-400 font-fira-code mt-1">Python Forensic Tool</p>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col h-[calc(100%-16rem)] bg-black/40 backdrop-blur-sm">
+                        <h3 class="font-exo text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Auditoria Forense de Registro</h3>
+                        <p class="text-gray-400 text-sm mb-4">Automatização para extração de metadados críticos e artefatos USB no Registro do Windows.</p>
+                        <div class="mt-auto flex items-center text-cyan-400 text-sm font-bold cursor-pointer hover:underline" onclick="openModal('winreg-usb-auditor')">
+                            Ver Detalhes & Repositório <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glassmorphism project-card project-item group border border-white/5 hover:border-cyan-500/50 transition-colors duration-300 rounded-xl overflow-hidden shadow-lg hover:shadow-cyan-500/20" data-category="hardware">
+                    <div class="project-image-container relative overflow-hidden h-64 bg-slate-900">
+                        <img src="https://i.imgur.com/tNfIT8E.jpg" alt="Suporte a Eventos" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                        <div class="absolute top-4 left-4"><span class="category-badge bg-cyan-500/20 text-cyan-300 text-xs px-2 py-1 rounded border border-cyan-500/30 backdrop-blur-md">Hardware & Infra</span></div>
+                    </div>
+                    <div class="p-6 flex flex-col h-[calc(100%-16rem)] bg-black/40 backdrop-blur-sm">
+                        <h3 class="font-exo text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors line-clamp-2">Preparação de Ambientes e Suporte a Eventos</h3>
+                        <p class="text-gray-400 text-sm mb-4">Infraestrutura técnica e suporte especializado para cursos, oficinas e congressos de tecnologia.</p>
+                        <div class="mt-auto flex items-center text-cyan-400 text-sm font-bold cursor-pointer hover:underline" onclick="openModal('events-support')">
+                            VER GALERIA (2 FOTOS) <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glassmorphism project-card project-item group border border-white/5 hover:border-cyan-500/50 transition-colors duration-300 rounded-xl overflow-hidden shadow-lg hover:shadow-cyan-500/20" data-category="hardware">
+                    <div class="project-image-container relative overflow-hidden h-64 bg-slate-900">
+                        <img src="https://imgur.com/WLc2plQ.jpg" alt="Comissionamento TES48V" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                        <div class="absolute top-4 left-4"><span class="category-badge bg-cyan-500/20 text-cyan-300 text-xs px-2 py-1 rounded border border-cyan-500/30 backdrop-blur-md">Hardware & Infra</span></div>
+                    </div>
+                    <div class="p-6 flex flex-col h-[calc(100%-16rem)] bg-black/40 backdrop-blur-sm">
+                        <h3 class="font-exo text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors line-clamp-2">Comissionamento de Gabinetes TES48V</h3>
+                        <p class="text-gray-400 text-sm mb-4">Implantação física e estruturação elétrica de estações de recarga móvel em Espaços Maker.</p>
+                        <div class="mt-auto flex items-center text-cyan-400 text-sm font-bold cursor-pointer hover:underline" onclick="openModal('tes48v-commissioning')">
+                            VER GALERIA (2 FOTOS) <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glassmorphism project-card project-item group border border-white/5 hover:border-cyan-500/50 transition-colors duration-300 rounded-xl overflow-hidden shadow-lg hover:shadow-cyan-500/20" data-category="hardware">
+                    <div class="project-image-container relative overflow-hidden h-64 bg-slate-900">
+                        <img src="https://i.imgur.com/yxZQw4K.jpeg" alt="Manutenção de Notebook" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                        <div class="absolute top-4 left-4"><span class="category-badge bg-cyan-500/20 text-cyan-300 text-xs px-2 py-1 rounded border border-cyan-500/30 backdrop-blur-md">Hardware</span></div>
+                    </div>
+                    <div class="p-6 flex flex-col h-[calc(100%-16rem)] bg-black/40 backdrop-blur-sm">
+                        <h3 class="font-exo text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Manutenção Avançada em Portáteis</h3>
+                        <p class="text-gray-400 text-sm mb-4">Galeria técnica detalhando o processo de desmontagem e análise de placa em dispositivos móveis.</p>
+                        <div class="mt-auto flex items-center text-cyan-400 text-sm font-bold cursor-pointer hover:underline" onclick="openGallery()">
+                            VER GALERIA (8 FOTOS) <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glassmorphism project-card project-item group border border-white/5 hover:border-cyan-500/50 transition-colors duration-300 rounded-xl overflow-hidden shadow-lg hover:shadow-cyan-500/20" data-category="mobile">
+                    <div class="project-image-container relative overflow-hidden h-64 bg-slate-900">
+                        <img src="https://i.imgur.com/dhIqB0k.jpeg" alt="MDM Provisioning" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                        <div class="absolute top-4 left-4"><span class="category-badge bg-cyan-500/20 text-cyan-300 text-xs px-2 py-1 rounded border border-cyan-500/30 backdrop-blur-md">Mobile</span></div>
+                    </div>
+                    <div class="p-6 flex flex-col h-[calc(100%-16rem)] bg-black/40 backdrop-blur-sm">
+                        <h3 class="font-exo text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Provisionamento Corporativo (MDM)</h3>
+                        <p class="text-gray-400 text-sm mb-4">Implementação de políticas de configuração em massa e padronização de software para frotas móveis.</p>
+                        <div class="mt-auto flex items-center text-cyan-400 text-sm font-bold cursor-pointer hover:underline" onclick="openModal('mdm-provisioning')">
+                            Ver Detalhes <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glassmorphism project-card project-item group border border-white/5 hover:border-cyan-500/50 transition-colors duration-300 rounded-xl overflow-hidden shadow-lg hover:shadow-cyan-500/20" data-category="redes">
+                    <div class="project-image-container relative overflow-hidden h-64 bg-slate-900">
+                        <img src="https://i.imgur.com/jdVOYri.jpg" alt="Retrofit de Rede Corporativa" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                        <div class="absolute top-4 left-4"><span class="category-badge bg-cyan-500/20 text-cyan-300 text-xs px-2 py-1 rounded border border-cyan-500/30 backdrop-blur-md">Redes</span></div>
+                    </div>
+                    <div class="p-6 flex flex-col h-[calc(100%-16rem)] bg-black/40 backdrop-blur-sm">
+                        <h3 class="font-exo text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors line-clamp-2">Retrofit de Infraestrutura de Rede Corporativa</h3>
+                        <p class="text-gray-400 text-sm mb-4">Reestruturação e padronização de cabeamento. Foco na mitigação de crosstalk e otimização de throughput.</p>
+                        <div class="mt-auto flex items-center text-cyan-400 text-sm font-bold cursor-pointer hover:underline" onclick="openModal('network-retrofit')">
+                            VER GALERIA (5 FOTOS) <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <div id="modal-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="modal-content-wrapper relative w-11/12 max-w-5xl max-h-[90vh] flex flex-col md:flex-row bg-slate-950 border border-cyan-500/30 rounded-xl overflow-hidden shadow-2xl shadow-cyan-500/20">
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-50 text-gray-400 hover:text-cyan-400">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div class="md:w-3/5 bg-black relative flex items-center justify-center min-h-[300px]">
+                <button id="modal-arrow-left" onclick="navigateModalCarousel(-1)" class="absolute left-4 z-10 p-2 bg-black/50 hover:bg-cyan-500/20 rounded-full text-cyan-400 hidden">❮</button>
+                <img id="modal-image" src="" alt="Detalhes do Projeto" class="max-w-full max-h-[50vh] md:max-h-[90vh] object-contain transition-opacity duration-300">
+                <button id="modal-arrow-right" onclick="navigateModalCarousel(1)" class="absolute right-4 z-10 p-2 bg-black/50 hover:bg-cyan-500/20 rounded-full text-cyan-400 hidden">❯</button>
+            </div>
+            <div class="md:w-2/5 p-8 overflow-y-auto bg-slate-900/50">
+                <h3 id="modal-title" class="font-exo text-2xl font-bold text-cyan-400 mb-4">Título</h3>
+                <div id="modal-description" class="text-gray-300 text-sm leading-relaxed space-y-4"></div>
+                <div id="modal-links" class="mt-8 hidden">
+                    <a id="btn-github" href="#" target="_blank" class="inline-flex items-center bg-white/5 border border-white/20 text-white px-5 py-2.5 rounded text-xs font-bold hover:bg-cyan-500 hover:text-black transition-all">
+                        VIEW ON GITHUB
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-gallery" class="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl hidden transition-opacity duration-300">
+        <div class="relative w-full max-w-6xl flex flex-col items-center">
+            <button onclick="closeGallery()" class="absolute -top-12 md:-top-16 right-0 text-white hover:text-cyan-400 text-lg md:text-2xl font-bold flex items-center">
+                FECHAR <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div class="relative w-full flex items-center justify-center group">
+                <button onclick="prevImg()" class="nav-btn absolute left-2 md:left-6 z-10 p-3 md:p-5 bg-black/50 hover:bg-cyan-500/20 rounded-full text-cyan-400 text-xl border border-cyan-500/20">❮</button>
+                <div class="w-full flex justify-center bg-black/40 rounded-xl overflow-hidden shadow-2xl border border-white/5">
+                    <img id="main-gallery-img" src="" class="max-h-[75vh] object-contain transition-opacity duration-300">
+                </div>
+                <button onclick="nextImg()" class="nav-btn absolute right-2 md:right-6 z-10 p-3 md:p-5 bg-black/50 hover:bg-cyan-500/20 rounded-full text-cyan-400 text-xl border border-cyan-500/20">❯</button>
+            </div>
+            <div class="mt-6 text-center">
+                <p id="gallery-counter" class="text-cyan-400 font-exo font-bold tracking-widest text-lg"></p>
+                <p class="text-gray-400 text-sm mt-1">Utilize as setas do teclado ou botões laterais</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-black/80 backdrop-blur-md border-t border-white/10 mt-10 relative z-10">
+        <div class="container mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-left">
+                <span class="font-exo text-2xl font-bold text-white">CFSJ<span class="text-cyan-400">TECH</span></span>
+                <p class="text-xs text-gray-400 mt-1 tracking-wider uppercase">Engenharia de Sistemas & Inovação</p>
+            </div>
+            <div class="text-center md:text-right text-gray-500 text-xs">
+                &copy; <script>document.write(new Date().getFullYear())</script> CFSJ TECH. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="main.js"></script>
+    <script src="script-portfolio.js"></script>
+</body>
+</html>

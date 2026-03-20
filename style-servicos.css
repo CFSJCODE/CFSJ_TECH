@@ -1,0 +1,114 @@
+/* --- Configuração Base e Tipografia --- */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #000000;
+    color: #E0E0E0;
+    overflow-x: hidden;
+}
+
+.font-exo {
+    font-family: 'Exo 2', sans-serif;
+}
+
+/* --- Canvas 3D de Fundo --- */
+#background-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.8;
+}
+
+/* --- Efeito de Vidro Aprimorado --- */
+.glassmorphism {
+    background: rgba(10, 15, 25, 0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 255, 255, 0.15);
+    box-shadow: 0 0 40px rgba(0, 255, 255, 0.05);
+}
+
+/* --- Animações --- */
+.animate-on-scroll {
+    opacity: 0;
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.is-visible {
+    opacity: 1;
+    transform: none !important;
+}
+ 
+/* --- Efeitos de Hover --- */
+.cyber-button {
+    position: relative;
+    overflow: hidden;
+    transform: scale(1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.cyber-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 224, 255, 0.5);
+}
+.cyber-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.4s ease;
+}
+.cyber-button:hover::before {
+    left: 100%;
+}
+
+.card-3d-hover {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    transform-style: preserve-3d;
+}
+.card-3d-hover:hover {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    border-color: rgba(0, 255, 255, 0.4);
+}
+
+/* --- Barra de Rolagem --- */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb {
+    background-color: #0CF;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #0CF;
+}
+
+/* --- Navegação --- */
+.nav-link {
+    position: relative;
+    padding: 8px 4px;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #a0a0a0;
+    transition: color 0.3s ease;
+}
+.nav-link:hover { color: #ffffff; }
+.nav-link::before, .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #0CF;
+    left: 0;
+    transform: scaleX(0);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.nav-link::before { top: 0; transform-origin: left; }
+.nav-link::after { bottom: 0; transform-origin: right; }
+.nav-link:hover::before, .nav-link:hover::after, .active-link::before, .active-link::after {
+    transform: scaleX(1);
+}
+.active-link { color: #ffffff !important; }
